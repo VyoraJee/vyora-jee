@@ -2,249 +2,438 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#050a07">
-<title>Vyora JEE — Track. Master. Crack JEE.</title>
-<style>
-:root{--green:#00ff77;--bg:#050907;--panel:rgba(12,29,20,.78);--border:rgba(0,255,119,.22);--muted:#9eafa5}
-*{box-sizing:border-box}
-body{margin:0;background:radial-gradient(ellipse at 80% 0%,#073d25 0,transparent 35%),radial-gradient(ellipse at 0% 55%,#07321e 0,transparent 35%),var(--bg);color:#f5fff8;font:15px system-ui,Arial,sans-serif;min-height:100vh}
-button,input,select,textarea{font:inherit}
-button{cursor:pointer}
-button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--green);outline-offset:2px}
-.glow{color:white;text-shadow:0 0 14px #00ff7790}
-header{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 5%;background:#050907eF;border-bottom:1px solid var(--border);backdrop-filter:blur(18px)}
-.brand{font-size:22px;font-weight:900;letter-spacing:2px}.brand span{color:var(--green)}
-.pill{border:1px solid var(--border);border-radius:50px;padding:8px 12px;color:var(--green);font-size:12px}
-.layout{display:grid;grid-template-columns:220px minmax(0,1fr);max-width:1450px;margin:auto;min-height:calc(100vh - 65px)}
-aside{padding:22px 14px;border-right:1px solid var(--border)}
-.nav{display:block;width:100%;text-align:left;color:#d7e9de;background:transparent;border:0;border-radius:10px;padding:13px;margin-bottom:5px}
-.nav.active,.nav:hover{background:#00ff7714;color:var(--green)}
-main{padding:28px;min-width:0}
-h1{font-size:clamp(27px,5vw,44px);margin:0 0 8px}
-h2{font-size:19px;margin:0 0 16px}
-h3{font-size:16px;margin:0 0 8px}
-p{color:var(--muted);line-height:1.55}
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:22px 0}
-.card{background:var(--panel);border:1px solid var(--border);border-radius:18px;padding:18px;box-shadow:0 0 28px #00ff7708;backdrop-filter:blur(15px);min-width:0}
-.metric{font-size:30px;font-weight:800;color:var(--green);margin:8px 0}
-.muted{color:var(--muted);font-size:13px}
-.btn{background:var(--green);color:#00190a;border:0;border-radius:10px;padding:11px 15px;font-weight:800}
-.btn.secondary{background:#00ff7710;border:1px solid var(--border);color:var(--green)}
-.btn.danger{background:#ff53531a;color:#ff9e9e;border:1px solid #ff535344}
-input,select,textarea{width:100%;background:#07110b;color:white;border:1px solid #284735;border-radius:9px;padding:11px;margin:5px 0 12px}
-textarea{min-height:110px;resize:vertical}
-label{font-size:13px;color:#c5d7cc}
-.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.row>*{flex:1;min-width:0}
-.progress{height:8px;background:#203027;border-radius:20px;overflow:hidden;margin:12px 0}
-.progress div{height:100%;background:var(--green);box-shadow:0 0 12px var(--green);transition:width .2s}
-.subject{margin-top:20px}
-.chapter{display:grid;grid-template-columns:minmax(0,1fr) 95px 120px;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid #ffffff12}
-.chapter input{margin:0}
-.chapter small{color:var(--muted)}
-.hidden{display:none!important}
-.auth-wrap{max-width:460px;margin:35px auto}
-.quote{font-size:18px;color:white;line-height:1.5}
-.bottom{display:none}
-a{color:var(--green);overflow-wrap:anywhere}
-.video{border:1px solid var(--border);border-radius:12px;padding:14px;margin:10px 0}
-footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
-@media(max-width:760px){
- .layout{display:block}aside{display:none}main{padding:18px 14px 90px}
- .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
- .card{padding:14px}.metric{font-size:25px}
- .bottom{display:flex;position:fixed;z-index:10;bottom:0;left:0;right:0;justify-content:space-around;gap:2px;padding:8px 3px calc(8px + env(safe-area-inset-bottom));background:#050907f5;border-top:1px solid var(--border);backdrop-filter:blur(16px)}
- .bottom button{background:none;border:0;color:#d7e9de;font-size:11px;padding:7px 4px}
- .bottom button.active{color:var(--green)}
- .chapter{grid-template-columns:minmax(0,1fr) 72px;gap:8px}
- .chapter .deadline{grid-column:1/-1}
- header{padding:12px}
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#07110d">
+  <title>Vyora JEE — Your Journey, Your Rank</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    :root {
+      --bg: #07110d;
+      --panel: rgba(16, 34, 25, .88);
+      --green: #b6ff45;
+      --text: #f3fff6;
+      --muted: #9bb1a2;
+      --border: rgba(182, 255, 69, .2);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      background:
+        radial-gradient(ellipse at top, #193722 0%, transparent 48%),
+        var(--bg);
+      font-family: system-ui, Arial, sans-serif;
+    }
+
+    header {
+      padding: 22px 6%;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      color: var(--green);
+      font-size: 25px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-shadow: 0 0 18px #91ff5266;
+    }
+
+    .status {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    main {
+      width: min(950px, 92%);
+      margin: 42px auto;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 28px 8px;
+    }
+
+    .hero h1 {
+      font-size: clamp(32px, 7vw, 56px);
+      margin: 0 0 12px;
+      line-height: 1.1;
+    }
+
+    .hero h1 span { color: var(--green); }
+
+    .hero p {
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .card {
+      max-width: 490px;
+      margin: 25px auto;
+      padding: 26px;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background: var(--panel);
+      box-shadow: 0 0 35px #8aff4010;
+    }
+
+    h2 { margin-top: 0; }
+
+    label {
+      display: block;
+      margin: 16px 0 7px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    input {
+      width: 100%;
+      padding: 13px;
+      color: white;
+      background: #08150e;
+      border: 1px solid #35533d;
+      border-radius: 10px;
+      outline: none;
+      font-size: 15px;
+    }
+
+    input:focus { border-color: var(--green); }
+
+    button {
+      cursor: pointer;
+      border: 0;
+      border-radius: 10px;
+      padding: 13px 16px;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .primary {
+      width: 100%;
+      margin-top: 18px;
+      background: var(--green);
+      color: #0a1609;
+    }
+
+    .secondary {
+      background: transparent;
+      color: var(--green);
+      border: 1px solid var(--border);
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .actions button { flex: 1; }
+
+    #message {
+      color: var(--green);
+      font-size: 13px;
+      line-height: 1.6;
+      overflow-wrap: anywhere;
+    }
+
+    #dashboard { display: none; }
+
+    .tiles {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 14px;
+    }
+
+    .tile {
+      padding: 20px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 15px;
+    }
+
+    .tile strong {
+      display: block;
+      color: var(--green);
+      font-size: 23px;
+      margin-bottom: 8px;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      padding: 30px 12px;
+      font-size: 12px;
+    }
+  </style>
 </head>
+
 <body>
 <header>
- <div class="brand glow">VYORA<span> JEE</span></div>
- <div class="row" style="flex:0 1 auto;justify-content:flex-end">
-  <span id="headerUser" class="pill">Guest mode</span>
-  <button class="btn secondary" id="authBtn" onclick="showAuth()">Login</button>
- </div>
+  <div class="brand">VYORA JEE</div>
+  <div class="status" id="connectionStatus">Checking connection...</div>
 </header>
 
-<div id="authScreen" class="auth-wrap hidden">
- <section class="card">
-  <h1 class="glow">Your JEE journey.</h1>
-  <p>Create your account or sign in. Email login works after you configure Supabase below.</p>
-  <div class="row">
-   <button class="btn" onclick="setAuthMode('signup')">Create account</button>
-   <button class="btn secondary" onclick="setAuthMode('login')">Login</button>
-  </div>
-  <form id="authForm">
-   <label for="authEmail">Email</label>
-   <input id="authEmail" type="email" autocomplete="email" required placeholder="you@example.com">
-   <label for="authPassword">Password</label>
-   <input id="authPassword" type="password" autocomplete="current-password" minlength="8" required placeholder="At least 8 characters">
-   <button class="btn" id="authSubmit" type="submit" style="width:100%">Create account</button>
-  </form>
-  <p id="authMessage" role="status"></p>
-  <button class="btn secondary" onclick="showPage('dashboard')">Continue in local demo mode</button>
- </section>
-</div>
-
-<div id="appLayout" class="layout">
- <aside>
-  <button class="nav active" data-page="dashboard" onclick="showPage('dashboard')">◈ Dashboard</button>
-  <button class="nav" data-page="tracker" onclick="showPage('tracker')">▤ Chapter tracker</button>
-  <button class="nav" data-page="planner" onclick="showPage('planner')">◷ Deadlines</button>
-  <button class="nav" data-page="notes" onclick="showPage('notes')">▧ My notes</button>
-  <button class="nav" data-page="lectures" onclick="showPage('lectures')">▷ Lectures</button>
-  <button class="nav" data-page="timer" onclick="showPage('timer')">◴ Study timer</button>
-  <button class="nav" data-page="settings" onclick="showPage('settings')">⚙ Settings</button>
- </aside>
-
- <main>
-  <section id="page-dashboard">
-   <p class="pill">YOUR PERSONAL STUDY COMMAND CENTER</p>
-   <h1 class="glow">Build your future.</h1>
-   <p>Small daily wins. Extraordinary results.</p>
-   <div class="grid">
-    <div class="card"><div class="muted">Overall completion</div><div class="metric" id="overall">0%</div><div class="progress"><div id="overallBar" style="width:0%"></div></div></div>
-    <div class="card"><div class="muted">Study time today</div><div class="metric" id="todayTime">0m</div><div class="muted">Recorded focus sessions</div></div>
-    <div class="card"><div class="muted">Study streak</div><div class="metric">🔥 <span id="streak">0</span></div><div class="muted">Days with recorded study</div></div>
-    <div class="card"><div class="muted">Chapters completed</div><div class="metric" id="completed">0</div><div class="muted">Across all three subjects</div></div>
-    <div class="card"><div class="muted">Pending deadlines</div><div class="metric" id="pending">0</div><div class="muted">Not completed yet</div></div>
-    <div class="card"><div class="muted">Focus sessions</div><div class="metric" id="sessions">0</div><div class="muted">Completed timer sessions</div></div>
-   </div>
-   <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr))">
-    <div class="card"><h2>Today's mission</h2><p id="mission">Choose a chapter and set a realistic goal.</p><button class="btn" onclick="showPage('tracker')">Continue studying →</button></div>
-    <div class="card"><h2>Daily motivation</h2><div id="quote" class="quote"></div><p>Consistency beats occasional intensity.</p><button class="btn secondary" onclick="newQuote()">New quote</button></div>
-   </div>
-   <div class="card"><h2>Subject progress</h2><div id="subjectSummary"></div></div>
+<main>
+  <section class="hero">
+    <h1>Build your <span>future.</span><br>One chapter at a time.</h1>
+    <p>Your JEE preparation journey starts here.<br>
+       Stay consistent. Track progress. Keep moving.</p>
   </section>
 
-  <section id="page-tracker" class="hidden">
-   <h1 class="glow">Chapter tracker</h1><p>Update progress from 0% to 100%. Your changes save in this browser.</p>
-   <div class="card">
-    <div class="row"><div><label for="subjectFilter">Subject</label><select id="subjectFilter" onchange="renderTracker()"><option>All</option><option>Physics</option><option>Chemistry</option><option>Mathematics</option></select></div>
-    <div><label for="newChapter">Add your own chapter</label><input id="newChapter" placeholder="Chapter name"></div>
-    <button class="btn" onclick="addChapter()">+ Add</button></div>
-   </div>
-   <div id="chapterList"></div>
+  <section class="card" id="authCard">
+    <h2 id="formTitle">Welcome to Vyora</h2>
+    <p class="small">Create an account or sign in to continue.</p>
+
+    <label for="email">Email address</label>
+    <input id="email" type="email" placeholder="you@example.com"
+           autocomplete="email" required>
+
+    <label for="password">Password</label>
+    <input id="password" type="password" placeholder="At least 6 characters"
+           autocomplete="current-password" required>
+
+    <button class="primary" id="submitButton" onclick="signIn()">
+      Sign In
+    </button>
+
+    <div class="actions">
+      <button class="secondary" onclick="signUp()">Create Account</button>
+      <button class="secondary" onclick="signIn()">Sign In</button>
+    </div>
+
+    <p id="message" role="status" aria-live="polite"></p>
+    <p class="small">
+      Email confirmation may be required. Check your inbox after signing up.
+    </p>
   </section>
 
-  <section id="page-planner" class="hidden">
-   <h1 class="glow">Deadline planner</h1><p>Set or change your target date for any chapter.</p>
-   <div class="card"><label for="deadlineChapter">Choose chapter</label><select id="deadlineChapter"></select><label for="deadlineDate">Target date</label><input id="deadlineDate" type="date"><button class="btn" onclick="saveDeadline()">Save deadline</button></div>
-   <div id="deadlineList" style="margin-top:15px"></div>
-  </section>
+  <section id="dashboard">
+    <div class="card">
+      <h2>Your Vyora dashboard</h2>
+      <p id="welcome"></p>
+      <p class="small">
+        You are signed in. This starter dashboard confirms your account
+        connection; chapter tracking and cloud-saved notes still need to be
+        added separately.
+      </p>
+      <button class="secondary" onclick="signOut()">Sign Out</button>
+    </div>
 
-  <section id="page-notes" class="hidden">
-   <h1 class="glow">My notes</h1><p>Notes are saved locally in this browser in this first version.</p>
-   <div class="card"><label for="noteChapter">Chapter</label><select id="noteChapter"></select><label for="noteText">Your notes</label><textarea id="noteText" placeholder="Formulas, mistakes, concepts to revise..."></textarea><button class="btn" onclick="saveNote()">Save notes</button><button class="btn secondary" onclick="loadNote()">Load saved notes</button><span id="noteMessage" class="muted"></span></div>
+    <div class="tiles">
+      <div class="tile">
+        <strong>PCM</strong>
+        <span>Physics · Chemistry · Maths</span>
+      </div>
+      <div class="tile">
+        <strong>Consistency</strong>
+        <span>One focused session at a time</span>
+      </div>
+      <div class="tile">
+        <strong>Your goal</strong>
+        <span>Prepare. Practise. Improve.</span>
+      </div>
+    </div>
   </section>
+</main>
 
-  <section id="page-lectures" class="hidden">
-   <h1 class="glow">Lecture library</h1><p>Add public YouTube lecture links. Private or paid batch videos must only be embedded where the provider permits it.</p>
-   <div class="card"><label for="videoTitle">Lecture title</label><input id="videoTitle" placeholder="e.g. Laws of Motion — Lecture 1"><label for="videoUrl">YouTube URL</label><input id="videoUrl" placeholder="https://www.youtube.com/watch?v=..."><button class="btn" onclick="addVideo()">Add lecture</button></div>
-   <div id="videoList"></div>
-  </section>
-
-  <section id="page-timer" class="hidden">
-   <h1 class="glow">Focus mode</h1><p>Study with intention. Every completed session adds to your study statistics.</p>
-   <div class="card" style="text-align:center;max-width:520px;margin:auto">
-    <div class="row"><button class="btn secondary" onclick="setTimer(25)">25 min</button><button class="btn secondary" onclick="setTimer(50)">50 min</button><button class="btn secondary" onclick="setTimer(90)">90 min</button></div>
-    <div class="metric glow" id="timerDisplay" style="font-size:clamp(48px,12vw,76px);margin:30px 0">25:00</div>
-    <button class="btn" id="timerStart" onclick="toggleTimer()">Start focus</button>
-    <button class="btn secondary" onclick="resetTimer()">Reset</button>
-    <p id="timerMessage" role="status"></p>
-   </div>
-  </section>
-
-  <section id="page-settings" class="hidden">
-   <h1 class="glow">Settings</h1>
-   <div class="card">
-    <h2>Student profile</h2>
-    <label for="studentName">Display name</label><input id="studentName" placeholder="Your name">
-    <label for="studentClass">Class</label><select id="studentClass"><option>Class 11</option><option>Class 12</option><option>Dropper</option></select>
-    <label for="jeeDate">JEE target date</label><input id="jeeDate" type="date">
-    <button class="btn" onclick="saveProfile()">Save profile</button>
-   </div>
-   <div class="card" style="margin-top:15px">
-    <h2>Supabase connection</h2>
-    <p>Enter your project URL and publishable key. These are browser-safe values; never use a service-role or secret key here.</p>
-    <label for="supabaseUrl">Project URL</label><input id="supabaseUrl" placeholder="https://your-project.supabase.co">
-    <label for="supabaseKey">Publishable key</label><input id="supabaseKey" placeholder="sb_publishable_..." autocomplete="off">
-    <button class="btn" onclick="connectSupabase()">Connect / sign in setup</button>
-    <p id="connectionStatus" role="status"></p>
-    <p class="muted">Cloud login is enabled after valid configuration. Cloud saving of chapters and notes requires the secure database schema and access policies to be installed separately.</p>
-   </div>
-   <div class="card" style="margin-top:15px">
-    <h2>Data</h2><button class="btn secondary" onclick="exportData()">Export my data</button> <button class="btn danger" onclick="clearLocal()">Clear local data</button>
-   </div>
-  </section>
- </main>
-</div>
-
-<nav class="bottom">
- <button class="active" data-page="dashboard" onclick="showPage('dashboard')">◈<br>Home</button>
- <button data-page="tracker" onclick="showPage('tracker')">▤<br>Chapters</button>
- <button data-page="planner" onclick="showPage('planner')">◷<br>Deadlines</button>
- <button data-page="notes" onclick="showPage('notes')">▧<br>Notes</button>
- <button data-page="timer" onclick="showPage('timer')">◴<br>Timer</button>
-</nav>
-<footer>VYORA JEE · Track. Master. Crack JEE. · Your journey, your progress.</footer>
+<footer>VYORA JEE · Focus on progress, not perfection.</footer>
 
 <script>
-"use strict";
-const KEY="vyora-jee-v1";
-const initial=[
-["Physics","Units and Measurements"],["Physics","Motion in a Straight Line"],["Physics","Motion in a Plane"],["Physics","Laws of Motion"],["Physics","Work, Energy and Power"],["Physics","System of Particles and Rotation"],["Physics","Gravitation"],["Physics","Properties of Matter"],["Physics","Thermodynamics"],["Physics","Kinetic Theory"],["Physics","Oscillations and Waves"],["Physics","Electrostatics"],["Physics","Current Electricity"],["Physics","Magnetic Effects of Current"],["Physics","Electromagnetic Induction"],["Physics","Alternating Current"],["Physics","Ray Optics"],["Physics","Wave Optics"],["Physics","Dual Nature"],["Physics","Atoms and Nuclei"],["Physics","Semiconductors"],
-["Chemistry","Some Basic Concepts"],["Chemistry","Structure of Atom"],["Chemistry","Periodicity"],["Chemistry","Chemical Bonding"],["Chemistry","Thermodynamics"],["Chemistry","Equilibrium"],["Chemistry","Redox Reactions"],["Chemistry","Solutions"],["Chemistry","Electrochemistry"],["Chemistry","Chemical Kinetics"],["Chemistry","p-Block Elements"],["Chemistry","d- and f-Block Elements"],["Chemistry","Coordination Compounds"],["Chemistry","Organic Chemistry Basics"],["Chemistry","Hydrocarbons"],["Chemistry","Haloalkanes and Haloarenes"],["Chemistry","Alcohols, Phenols and Ethers"],["Chemistry","Aldehydes, Ketones and Acids"],["Chemistry","Amines"],["Chemistry","Biomolecules"],
-["Mathematics","Sets and Functions"],["Mathematics","Trigonometry"],["Mathematics","Complex Numbers"],["Mathematics","Quadratic Equations"],["Mathematics","Permutations and Combinations"],["Mathematics","Binomial Theorem"],["Mathematics","Sequences and Series"],["Mathematics","Straight Lines"],["Mathematics","Conic Sections"],["Mathematics","Limits and Derivatives"],["Mathematics","Matrices"],["Mathematics","Determinants"],["Mathematics","Continuity and Differentiability"],["Mathematics","Applications of Derivatives"],["Mathematics","Integrals"],["Mathematics","Differential Equations"],["Mathematics","Vector Algebra"],["Mathematics","3D Geometry"],["Mathematics","Probability"],["Mathematics","Statistics"]
-].map((c,i)=>({id:"ch"+i,subject:c[0],name:c[1],progress:0,deadline:"",done:false}));
-let data=loadData(),authMode="signup",supabase=null,user=null,timerSeconds=1500,timerInterval=null,timerRunning=false;
-function loadData(){try{const d=JSON.parse(localStorage.getItem(KEY)||"{}");return {chapters:Array.isArray(d.chapters)?d.chapters:initial.map(x=>({...x})),notes:d.notes||{},videos:d.videos||[],sessions:d.sessions||[],studyDays:d.studyDays||[],profile:d.profile||{name:"",studentClass:"Class 11",jeeDate:""}}}catch(e){return {chapters:initial.map(x=>({...x})),notes:{},videos:[],sessions:[],studyDays:[],profile:{name:"",studentClass:"Class 11",jeeDate:""}}}}
-function saveData(){localStorage.setItem(KEY,JSON.stringify(data));renderAll()}
-function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-function showPage(p){document.querySelectorAll("main section").forEach(x=>x.classList.add("hidden"));document.getElementById("page-"+p)?.classList.remove("hidden");document.getElementById("authScreen").classList.add("hidden");document.getElementById("appLayout").classList.remove("hidden");document.querySelectorAll("[data-page]").forEach(x=>x.classList.toggle("active",x.dataset.page===p));if(p==="notes")refreshChapterOptions();if(p==="planner")refreshChapterOptions();renderAll();window.scrollTo(0,0)}
-function showAuth(){document.getElementById("authScreen").classList.remove("hidden");document.getElementById("appLayout").classList.add("hidden");document.getElementById("authMessage").textContent="";window.scrollTo(0,0)}
-function setAuthMode(m){authMode=m;document.getElementById("authSubmit").textContent=m==="signup"?"Create account":"Login";document.getElementById("authPassword").autocomplete=m==="signup"?"new-password":"current-password";document.getElementById("authMessage").textContent=""}
-function renderAll(){renderDashboard();renderTracker();renderDeadlineList();renderVideos();document.getElementById("studentName").value=data.profile.name;document.getElementById("studentClass").value=data.profile.studentClass;document.getElementById("jeeDate").value=data.profile.jeeDate;document.getElementById("headerUser").textContent=user?.email||data.profile.name||"Local demo"}
-function renderDashboard(){const n=data.chapters.length,done=data.chapters.filter(c=>c.progress>=100).length,avg=n?Math.round(data.chapters.reduce((a,c)=>a+(+c.progress||0),0)/n):0;document.getElementById("overall").textContent=avg+"%";document.getElementById("overallBar").style.width=avg+"%";document.getElementById("completed").textContent=done;document.getElementById("pending").textContent=data.chapters.filter(c=>c.deadline&&c.progress<100).length;document.getElementById("sessions").textContent=data.sessions.length;const today=new Date().toISOString().slice(0,10);document.getElementById("todayTime").textContent=Math.round(data.sessions.filter(s=>s.date===today).reduce((a,s)=>a+s.minutes,0))+"m";document.getElementById("streak").textContent=calcStreak();document.getElementById("subjectSummary").innerHTML=["Physics","Chemistry","Mathematics"].map(s=>{const arr=data.chapters.filter(c=>c.subject===s),p=arr.length?Math.round(arr.reduce((a,c)=>a+c.progress,0)/arr.length):0;return `<div style="margin:15px 0"><div class="row"><strong>${s}</strong><span style="text-align:right">${p}%</span></div><div class="progress"><div style="width:${p}%"></div></div></div>`}).join("");const next=data.chapters.find(c=>c.progress<100);document.getElementById("mission").textContent=next?`Continue ${next.subject}: ${next.name} (${next.progress}% complete).`:"All listed chapters completed — plan your revision!"}
-function calcStreak(){const set=new Set(data.studyDays),d=new Date();let n=0;while(true){const k=d.toISOString().slice(0,10);if(!set.has(k))break;n++;d.setUTCDate(d.getUTCDate()-1)}return n}
-function renderTracker(){const filter=document.getElementById("subjectFilter").value;const arr=data.chapters.filter(c=>filter==="All"||c.subject===filter);const groups=["Physics","Chemistry","Mathematics"].filter(s=>filter==="All"||filter===s);document.getElementById("chapterList").innerHTML=groups.map(s=>{const list=arr.filter(c=>c.subject===s);return `<div class="card subject"><h2>${s}</h2>${list.map(c=>`<div class="chapter"><div><strong>${esc(c.name)}</strong><br><small>${c.progress>=100?"Completed":c.progress>0?"In progress":"Not started"}${c.deadline?" · Due "+esc(c.deadline):""}</small></div><input aria-label="${esc(c.name)} progress percentage" type="number" min="0" max="100" value="${c.progress}" onchange="updateProgress('${c.id}',this.value)"><button class="btn secondary" onclick="editChapter('${c.id}')">Edit</button><div class="deadline"><div class="progress"><div style="width:${c.progress}%"></div></div></div></div>`).join("")||'<p>No chapters yet.</p>'}</div>`}).join("")}
-function updateProgress(id,v){const c=data.chapters.find(x=>x.id===id);if(!c)return;c.progress=Math.max(0,Math.min(100,Number(v)||0));c.done=c.progress===100;if(c.progress>0)markStudy();saveData()}
-function editChapter(id){const c=data.chapters.find(x=>x.id===id);if(!c)return;const name=prompt("Chapter name:",c.name);if(name===null)return;if(!name.trim())return alert("Name cannot be empty.");c.name=name.trim();saveData()}
-function addChapter(){const name=document.getElementById("newChapter").value.trim();if(!name)return alert("Enter a chapter name.");const subject=document.getElementById("subjectFilter").value;if(subject==="All")return alert("Select a subject first.");data.chapters.push({id:"custom"+Date.now(),subject,name,progress:0,deadline:"",done:false});document.getElementById("newChapter").value="";saveData()}
-function refreshChapterOptions(){const opts=data.chapters.map(c=>`<option value="${c.id}">${esc(c.subject)} — ${esc(c.name)}</option>`).join("");["deadlineChapter","noteChapter"].forEach(id=>document.getElementById(id).innerHTML=opts)}
-function saveDeadline(){const c=data.chapters.find(x=>x.id===document.getElementById("deadlineChapter").value),d=document.getElementById("deadlineDate").value;if(!c)return alert("Choose a chapter.");c.deadline=d;saveData();alert("Deadline saved.")}
-function renderDeadlineList(){const arr=data.chapters.filter(c=>c.deadline).sort((a,b)=>a.deadline.localeCompare(b.deadline));document.getElementById("deadlineList").innerHTML=arr.map(c=>{const late=c.deadline<new Date().toISOString().slice(0,10)&&c.progress<100;return `<div class="card" style="margin:10px 0;border-color:${late?"#ff5353":"var(--border)"}"><strong>${esc(c.name)}</strong><p>${esc(c.subject)} · Due ${esc(c.deadline)} · ${c.progress}% complete ${late?"· OVERDUE":""}</p><button class="btn secondary" onclick="pickDeadline('${c.id}')">Change date</button> <button class="btn danger" onclick="removeDeadline('${c.id}')">Remove</button></div>`}).join("")||'<div class="card"><p>No deadlines yet.</p></div>'}
-function pickDeadline(id){refreshChapterOptions();document.getElementById("deadlineChapter").value=id;document.getElementById("deadlineDate").value=data.chapters.find(c=>c.id===id)?.deadline||"";window.scrollTo(0,0)}
-function removeDeadline(id){const c=data.chapters.find(x=>x.id===id);if(c)c.deadline="";saveData()}
-function saveNote(){const id=document.getElementById("noteChapter").value;if(!id)return alert("Choose a chapter.");data.notes[id]=document.getElementById("noteText").value;saveData();document.getElementById("noteMessage").textContent=" Saved locally."}
-function loadNote(){const id=document.getElementById("noteChapter").value;document.getElementById("noteText").value=data.notes[id]||"";document.getElementById("noteMessage").textContent=" Loaded."}
-function addVideo(){const title=document.getElementById("videoTitle").value.trim(),url=document.getElementById("videoUrl").value.trim();if(!title||!url)return alert("Enter a title and URL.");let u;try{u=new URL(url)}catch(e){return alert("Enter a valid YouTube URL.")}let id="";if(u.hostname==="youtu.be")id=u.pathname.slice(1);else if(["youtube.com","www.youtube.com","m.youtube.com"].includes(u.hostname)){id=u.searchParams.get("v")||u.pathname.match(/\/embed\/([^/]+)/)?.[1]||u.pathname.match(/\/shorts\/([^/]+)/)?.[1]||""}if(!/^[\w-]{11}$/.test(id))return alert("Use a standard YouTube video URL.");data.videos.push({title,id});document.getElementById("videoTitle").value="";document.getElementById("videoUrl").value="";saveData()}
-function renderVideos(){document.getElementById("videoList").innerHTML=data.videos.map((v,i)=>`<div class="video"><img loading="lazy" src="https://i.ytimg.com/vi/${esc(v.id)}/hqdefault.jpg" alt="" style="width:100%;max-width:380px;border-radius:10px"><h3>${esc(v.title)}</h3><a href="https://www.youtube.com/watch?v=${encodeURIComponent(v.id)}" target="_blank" rel="noopener noreferrer">Watch on YouTube ↗</a> <button class="btn danger" onclick="removeVideo(${i})">Remove</button></div>`).join("")||'<div class="card"><p>No lectures added yet.</p></div>'}
-function removeVideo(i){data.videos.splice(i,1);saveData()}
-function markStudy(){const today=new Date().toISOString().slice(0,10);if(!data.studyDays.includes(today))data.studyDays.push(today)}
-function setTimer(min){if(timerRunning)return;timerSeconds=min*60;renderTimer()}
-function renderTimer(){document.getElementById("timerDisplay").textContent=String(Math.floor(timerSeconds/60)).padStart(2,"0")+":"+String(timerSeconds%60).padStart(2,"0")}
-function toggleTimer(){if(timerRunning){clearInterval(timerInterval);timerRunning=false;document.getElementById("timerStart").textContent="Resume focus";return}timerRunning=true;document.getElementById("timerStart").textContent="Pause";timerInterval=setInterval(()=>{timerSeconds--;renderTimer();if(timerSeconds<=0){clearInterval(timerInterval);timerRunning=false;data.sessions.push({date:new Date().toISOString().slice(0,10),minutes:25});markStudy();saveData();document.getElementById("timerMessage").textContent="Session completed! Great work.";document.getElementById("timerStart").textContent="Start focus";if("Notification"in window&&Notification.permission==="granted")new Notification("Vyora JEE",{body:"Focus session completed!"});alert("Focus session completed!")}},1000)}
-function resetTimer(){clearInterval(timerInterval);timerRunning=false;timerSeconds=1500;renderTimer();document.getElementById("timerStart").textContent="Start focus";document.getElementById("timerMessage").textContent=""}
-function saveProfile(){data.profile={name:document.getElementById("studentName").value.trim(),studentClass:document.getElementById("studentClass").value,jeeDate:document.getElementById("jeeDate").value};saveData();alert("Profile saved locally.")}
-const quotes=["Small progress every day creates extraordinary results.","Your future is built by what you do today.","Focus on the next problem, not the whole mountain.","Discipline turns ambitious goals into daily actions.","One focused hour is better than a distracted afternoon.","Mistakes are data. Learn, adjust, and continue."];
-function newQuote(){document.getElementById("quote").textContent="“"+quotes[Math.floor(Math.random()*quotes.length)]+"”"}
-function exportData(){const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="vyora-jee-data.json";a.click();URL.revokeObjectURL(url)}
-function clearLocal(){if(!confirm("Delete this browser's Vyora JEE data? Export it first if needed."))return;localStorage.removeItem(KEY);data=loadData();saveData();alert("Local data cleared.")}
-async function loadSupabaseLibrary(){if(window.supabase)return window.supabase;return new Promise((resolve,reject)=>{const s=document.createElement("script");s.src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";s.onload=()=>resolve(window.supabase);s.onerror=()=>reject(Error("Could not load Supabase library. Check your internet connection."));document.head.appendChild(s)})}
-async function connectSupabase(){const url=document.getElementById("supabaseUrl").value.trim(),key=document.getElementById("supabaseKey").value.trim(),status=document.getElementById("connectionStatus");if(!/^https:\/\/[a-z0-9-]+\.supabase\.co$/i.test(url)||!key){status.textContent="Enter a valid Supabase project URL and publishable key.";return}try{const lib=await loadSupabaseLibrary();supabase=lib.createClient(url,key);localStorage.setItem("vyora-url",url);localStorage.setItem("vyora-pubkey",key);status.textContent="Connected to Supabase. You can now sign up or log in.";document.getElementById("authBtn").textContent="Login";alert("Supabase configured. Open Login to test your account.")}catch(e){status.textContent=e.message}}
-async function initSupabase(){try{const url=localStorage.getItem("vyora-url"),key=localStorage.getItem("vyora-pubkey");if(!url||!key)return;const lib=await loadSupabaseLibrary();supabase=lib.createClient(url,key);const {data:res}=await supabase.auth.getSession();user=res.session?.user||null;updateAuthUI();supabase.auth.onAuthStateChange((_event,session)=>{user=session?.user||null;updateAuthUI()})}catch(e){console.error(e)}}
-function updateAuthUI(){document.getElementById("headerUser").textContent=user?.email||data.profile.name||"Local demo";document.getElementById("authBtn").textContent=user?"Logout":"Login"}
-document.getElementById("authForm").addEventListener("submit",async e=>{e.preventDefault();const msg=document.getElementById("authMessage"),email=document.getElementById("authEmail").value.trim(),password=document.getElementById("authPassword").value;if(!supabase){msg.textContent="First open Settings → Supabase connection and enter your project URL and publishable key.";return}msg.textContent="Please wait…";try{const result=authMode==="signup"?await supabase.auth.signUp({email,password,options:{emailRedirectTo:location.origin+location.pathname}}):await supabase.auth.signInWithPassword({email,password});if(result.error)throw result.error;if(authMode==="signup"&&!result.data.session)msg.textContent="Account created. Check your email to verify your account, then log in.";else{user=result.data.user;msg.textContent="Login successful.";updateAuthUI();showPage("dashboard")}}catch(err){msg.textContent=err.message||"Authentication failed."}});
-document.getElementById("authBtn").addEventListener("click",async()=>{if(user&&supabase){await supabase.auth.signOut();user=null;updateAuthUI();showAuth()}else showAuth()});
-newQuote();refreshChapterOptions();renderAll();renderTimer();initSupabase();
+  // ==========================================================
+  // SUPABASE CONFIGURATION — ADD YOUR DETAILS HERE
+  // ==========================================================
+
+  const SUPABASE_URL = "PASTE_YOUR_PROJECT_URL_HERE";
+  const SUPABASE_PUBLISHABLE_KEY = "PASTE_YOUR_PUBLISHABLE_KEY_HERE";
+
+  // Example URL format:
+  // https://your-project-id.supabase.co
+  //
+  // The publishable key usually begins with:
+  // sb_publishable_
+  //
+  // NEVER paste a secret key or service_role key here.
+
+  // ==========================================================
+  // CONNECTION AND AUTHENTICATION
+  // ==========================================================
+
+  let supabaseClient = null;
+  let currentMode = "signin";
+
+  const message = document.getElementById("message");
+  const status = document.getElementById("connectionStatus");
+
+  function showMessage(text) {
+    message.textContent = text;
+  }
+
+  function initSupabase() {
+    if (
+      SUPABASE_URL === "https://kmhmmxdfadwcucaleswz.supabase.co/rest/v1/" ||
+      SUPABASE_PUBLISHABLE_KEY === "sb_publishable_D6KDjqyEZ7RCEU__oCJtrg_0AvEouWe"
+    ) {
+      status.textContent = "Supabase setup required";
+      showMessage("Add your Supabase URL and publishable key in the code.");
+      return;
+    }
+
+    if (!window.supabase) {
+      status.textContent = "Library failed to load";
+      showMessage("Refresh the page and check your internet connection.");
+      return;
+    }
+
+    try {
+      supabaseClient = window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY,
+        {
+          auth: {
+            persistSession: true,
+            autoRefreshToken: true,
+            detectSessionInUrl: true
+          }
+        }
+      );
+
+      status.textContent = "Supabase configured";
+
+      supabaseClient.auth.onAuthStateChange((_event, session) => {
+        renderSession(session);
+      });
+
+      supabaseClient.auth.getSession().then(({ data, error }) => {
+        if (error) {
+          showMessage(error.message);
+          return;
+        }
+        renderSession(data.session);
+      });
+    } catch (error) {
+      status.textContent = "Connection setup error";
+      showMessage(error.message || "Could not initialize Supabase.");
+    }
+  }
+
+  function renderSession(session) {
+    const signedIn = Boolean(session?.user);
+
+    document.getElementById("authCard").style.display =
+      signedIn ? "none" : "block";
+
+    document.getElementById("dashboard").style.display =
+      signedIn ? "block" : "none";
+
+    if (signedIn) {
+      document.getElementById("welcome").textContent =
+        "Signed in as " + session.user.email;
+      status.textContent = "Account signed in";
+    } else if (supabaseClient) {
+      status.textContent = "Ready to sign in";
+    }
+  }
+
+  function readCredentials() {
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+
+    if (!supabaseClient) {
+      showMessage("Supabase is not configured. Check the code section.");
+      return null;
+    }
+
+    if (!email || !password) {
+      showMessage("Enter both your email and password.");
+      return null;
+    }
+
+    if (password.length < 6) {
+      showMessage("Your password must contain at least 6 characters.");
+      return null;
+    }
+
+    return { email, password };
+  }
+
+  async function signUp() {
+    const credentials = readCredentials();
+    if (!credentials) return;
+
+    showMessage("Creating your account...");
+
+    const { data, error } = await supabaseClient.auth.signUp({
+      email: credentials.email,
+      password: credentials.password,
+      options: {
+        emailRedirectTo: window.location.href.split("#")[0]
+      }
+    });
+
+    if (error) {
+      showMessage(error.message);
+      return;
+    }
+
+    if (data.session) {
+      showMessage("Account created successfully.");
+      renderSession(data.session);
+    } else {
+      showMessage(
+        "Signup submitted. Check your email for the confirmation link."
+      );
+    }
+  }
+
+  async function signIn() {
+    const credentials = readCredentials();
+    if (!credentials) return;
+
+    showMessage("Signing in...");
+
+    const { data, error } =
+      await supabaseClient.auth.signInWithPassword(credentials);
+
+    if (error) {
+      showMessage(error.message);
+      return;
+    }
+
+    renderSession(data.session);
+    showMessage("Signed in successfully.");
+  }
+
+  async function signOut() {
+    if (!supabaseClient) return;
+
+    const { error } = await supabaseClient.auth.signOut();
+
+    if (error) {
+      showMessage(error.message);
+      return;
+    }
+
+    renderSession(null);
+    showMessage("You have signed out.");
+  }
+
+  initSupabase();
 </script>
 </body>
 </html>
