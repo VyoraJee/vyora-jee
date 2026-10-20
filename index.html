@@ -2,438 +2,972 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#07110d">
-  <title>Vyora JEE — Your Journey, Your Rank</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#ffffff">
+<title>Vyora JEE — Study Smarter</title>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
 
-  <style>
-    :root {
-      --bg: #07110d;
-      --panel: rgba(16, 34, 25, .88);
-      --green: #b6ff45;
-      --text: #f3fff6;
-      --muted: #9bb1a2;
-      --border: rgba(182, 255, 69, .2);
-    }
+<style>
+:root {
+  --bg: #f7f8fa;
+  --white: #ffffff;
+  --text: #20251f;
+  --muted: #7a827b;
+  --green: #477a43;
+  --green-light: #edf5e9;
+  --border: #e8ece7;
+  --shadow: 0 5px 24px rgba(25, 45, 25, .045);
+}
 
-    * { box-sizing: border-box; }
+* { box-sizing: border-box; }
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      color: var(--text);
-      background:
-        radial-gradient(ellipse at top, #193722 0%, transparent 48%),
-        var(--bg);
-      font-family: system-ui, Arial, sans-serif;
-    }
+html { scroll-behavior: smooth; }
 
-    header {
-      padding: 22px 6%;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+}
 
-    .brand {
-      color: var(--green);
-      font-size: 25px;
-      font-weight: 900;
-      letter-spacing: 2px;
-      text-shadow: 0 0 18px #91ff5266;
-    }
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; }
 
-    .status {
-      color: var(--muted);
-      font-size: 12px;
-    }
+.topbar {
+  height: 72px;
+  background: rgba(255,255,255,.94);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 6%;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  backdrop-filter: blur(14px);
+}
 
-    main {
-      width: min(950px, 92%);
-      margin: 42px auto;
-    }
+.logo {
+  font-size: 23px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
 
-    .hero {
-      text-align: center;
-      padding: 28px 8px;
-    }
+.logo span { color: var(--green); }
 
-    .hero h1 {
-      font-size: clamp(32px, 7vw, 56px);
-      margin: 0 0 12px;
-      line-height: 1.1;
-    }
+.top-label {
+  color: var(--muted);
+  font-size: 12px;
+}
 
-    .hero h1 span { color: var(--green); }
+.layout {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 32px 22px 70px;
+}
 
-    .hero p {
-      color: var(--muted);
-      line-height: 1.7;
-    }
+.greeting {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin: 8px 0 28px;
+}
 
-    .card {
-      max-width: 490px;
-      margin: 25px auto;
-      padding: 26px;
-      border: 1px solid var(--border);
-      border-radius: 22px;
-      background: var(--panel);
-      box-shadow: 0 0 35px #8aff4010;
-    }
+.eyebrow {
+  color: var(--green);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
 
-    h2 { margin-top: 0; }
+h1, h2, h3, p { margin-top: 0; }
 
-    label {
-      display: block;
-      margin: 16px 0 7px;
-      color: var(--muted);
-      font-size: 13px;
-    }
+h1 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(31px, 5vw, 44px);
+  font-weight: 600;
+  letter-spacing: -.8px;
+  margin: 10px 0;
+}
 
-    input {
-      width: 100%;
-      padding: 13px;
-      color: white;
-      background: #08150e;
-      border: 1px solid #35533d;
-      border-radius: 10px;
-      outline: none;
-      font-size: 15px;
-    }
+.subtitle {
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 0;
+}
 
-    input:focus { border-color: var(--green); }
+.date-pill {
+  border: 1px solid var(--border);
+  background: var(--white);
+  padding: 11px 15px;
+  border-radius: 12px;
+  color: var(--muted);
+  font-size: 12px;
+}
 
-    button {
-      cursor: pointer;
-      border: 0;
-      border-radius: 10px;
-      padding: 13px 16px;
-      font-weight: 800;
-      font-size: 14px;
-    }
+.quote-card {
+  background: #f0f5eb;
+  border: 1px solid #e3eddb;
+  border-radius: 20px;
+  padding: 28px 30px;
+  margin-bottom: 25px;
+  position: relative;
+  overflow: hidden;
+}
 
-    .primary {
-      width: 100%;
-      margin-top: 18px;
-      background: var(--green);
-      color: #0a1609;
-    }
+.quote-mark {
+  color: #a4c598;
+  font-family: Georgia, serif;
+  font-size: 64px;
+  line-height: .7;
+  margin-bottom: 12px;
+}
 
-    .secondary {
-      background: transparent;
-      color: var(--green);
-      border: 1px solid var(--border);
-    }
+#quoteText {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(20px, 3vw, 27px);
+  line-height: 1.55;
+  max-width: 790px;
+  margin-bottom: 13px;
+}
 
-    .actions {
-      display: flex;
-      gap: 10px;
-      margin-top: 12px;
-    }
+#quoteAuthor {
+  color: var(--green);
+  font-size: 12px;
+  font-weight: 700;
+}
 
-    .actions button { flex: 1; }
+.quote-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
 
-    #message {
-      color: var(--green);
-      font-size: 13px;
-      line-height: 1.6;
-      overflow-wrap: anywhere;
-    }
+.quote-btn {
+  border: 1px solid #d6e4cd;
+  border-radius: 10px;
+  background: #ffffffa8;
+  padding: 9px 13px;
+  color: var(--green);
+  font-size: 12px;
+  font-weight: 700;
+}
 
-    #dashboard { display: none; }
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 15px;
+  margin-bottom: 28px;
+}
 
-    .tiles {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 14px;
-    }
+.stat {
+  padding: 21px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 17px;
+  box-shadow: var(--shadow);
+}
 
-    .tile {
-      padding: 20px;
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 15px;
-    }
+.stat-label {
+  color: var(--muted);
+  font-size: 12px;
+  margin-bottom: 13px;
+}
 
-    .tile strong {
-      display: block;
-      color: var(--green);
-      font-size: 23px;
-      margin-bottom: 8px;
-    }
+.stat-value {
+  font-size: 29px;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
 
-    .small {
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.6;
-    }
+.stat-note {
+  color: var(--muted);
+  font-size: 11px;
+  margin-top: 8px;
+}
 
-    footer {
-      text-align: center;
-      color: var(--muted);
-      padding: 30px 12px;
-      font-size: 12px;
-    }
-  </style>
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 35px 0 16px;
+}
+
+.section-heading h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 25px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.section-heading p {
+  font-size: 12px;
+  color: var(--muted);
+  margin: 5px 0 0;
+}
+
+.btn {
+  border: 1px solid var(--border);
+  background: var(--white);
+  color: var(--text);
+  border-radius: 10px;
+  padding: 11px 15px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.btn-primary {
+  background: var(--green);
+  border-color: var(--green);
+  color: white;
+}
+
+.btn:hover { opacity: .85; }
+
+.subjects {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 15px;
+}
+
+.subject-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 17px;
+  padding: 21px;
+  box-shadow: var(--shadow);
+}
+
+.subject-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.subject-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 13px;
+  display: grid;
+  place-items: center;
+  font-size: 19px;
+  background: var(--green-light);
+}
+
+.subject-card h3 {
+  margin-bottom: 6px;
+  font-size: 17px;
+}
+
+.subject-card p {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 17px;
+}
+
+.progress-line {
+  height: 6px;
+  background: #edf0ec;
+  border-radius: 20px;
+  overflow: hidden;
+  margin: 12px 0 9px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--green);
+  border-radius: inherit;
+  width: 0;
+  transition: width .25s;
+}
+
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.subject-action {
+  width: 100%;
+  margin-top: 17px;
+}
+
+.panel {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 17px;
+  padding: 23px;
+  box-shadow: var(--shadow);
+}
+
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 17px;
+}
+
+.timer-display {
+  font-size: clamp(48px, 9vw, 66px);
+  font-weight: 700;
+  letter-spacing: -3px;
+  text-align: center;
+  margin: 17px 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.timer-subtitle {
+  color: var(--muted);
+  font-size: 12px;
+  text-align: center;
+}
+
+.timer-controls {
+  display: flex;
+  justify-content: center;
+  gap: 9px;
+  flex-wrap: wrap;
+}
+
+.timer-modes {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.mode-btn {
+  border: 1px solid var(--border);
+  background: #fff;
+  padding: 8px 12px;
+  border-radius: 9px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.mode-btn.active {
+  color: var(--green);
+  background: var(--green-light);
+  border-color: #d5e6cb;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--text);
+  outline: none;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: #8cb486;
+}
+
+label {
+  display: block;
+  font-size: 12px;
+  color: var(--muted);
+  margin: 15px 0 7px;
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 9px;
+  margin-top: 15px;
+}
+
+.form-actions button { flex: 1; }
+
+.chapter-list {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.chapter-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.chapter-item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--green);
+  flex-shrink: 0;
+}
+
+.chapter-name {
+  flex: 1;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.chapter-item.done .chapter-name {
+  text-decoration: line-through;
+  color: var(--muted);
+}
+
+.delete-btn {
+  border: 0;
+  background: transparent;
+  color: #9b7777;
+  font-size: 18px;
+  padding: 3px 7px;
+}
+
+.empty {
+  color: var(--muted);
+  font-size: 13px;
+  padding: 15px 0;
+  line-height: 1.7;
+}
+
+.notes-area {
+  min-height: 170px;
+  resize: vertical;
+  line-height: 1.7;
+}
+
+.note-status {
+  color: var(--muted);
+  font-size: 11px;
+  margin-top: 8px;
+}
+
+footer {
+  text-align: center;
+  color: var(--muted);
+  font-size: 11px;
+  padding: 30px 10px 5px;
+}
+
+@media (max-width: 760px) {
+  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .subjects { grid-template-columns: 1fr; }
+  .two-col { grid-template-columns: 1fr; }
+  .layout { padding: 24px 15px 50px; }
+  .topbar { padding: 0 17px; }
+  .quote-card { padding: 23px 20px; }
+}
+
+@media (max-width: 360px) {
+  .stat { padding: 15px; }
+  .stat-value { font-size: 24px; }
+  .field-row { grid-template-columns: 1fr; }
+}
+</style>
 </head>
 
 <body>
-<header>
-  <div class="brand">VYORA JEE</div>
-  <div class="status" id="connectionStatus">Checking connection...</div>
+
+<header class="topbar">
+  <div class="logo">VYORA<span>.</span></div>
+  <div class="top-label">YOUR JEE JOURNEY · YOUR PACE</div>
 </header>
 
-<main>
-  <section class="hero">
-    <h1>Build your <span>future.</span><br>One chapter at a time.</h1>
-    <p>Your JEE preparation journey starts here.<br>
-       Stay consistent. Track progress. Keep moving.</p>
+<main class="layout">
+
+  <section class="greeting">
+    <div>
+      <div class="eyebrow">Your personal study space</div>
+      <h1>Small steps. <span style="color:#477a43">Big dreams.</span></h1>
+      <p class="subtitle">Build consistency, one focused session at a time.</p>
+    </div>
+    <div class="date-pill" id="todayDate"></div>
   </section>
 
-  <section class="card" id="authCard">
-    <h2 id="formTitle">Welcome to Vyora</h2>
-    <p class="small">Create an account or sign in to continue.</p>
-
-    <label for="email">Email address</label>
-    <input id="email" type="email" placeholder="you@example.com"
-           autocomplete="email" required>
-
-    <label for="password">Password</label>
-    <input id="password" type="password" placeholder="At least 6 characters"
-           autocomplete="current-password" required>
-
-    <button class="primary" id="submitButton" onclick="signIn()">
-      Sign In
-    </button>
-
-    <div class="actions">
-      <button class="secondary" onclick="signUp()">Create Account</button>
-      <button class="secondary" onclick="signIn()">Sign In</button>
-    </div>
-
-    <p id="message" role="status" aria-live="polite"></p>
-    <p class="small">
-      Email confirmation may be required. Check your inbox after signing up.
-    </p>
-  </section>
-
-  <section id="dashboard">
-    <div class="card">
-      <h2>Your Vyora dashboard</h2>
-      <p id="welcome"></p>
-      <p class="small">
-        You are signed in. This starter dashboard confirms your account
-        connection; chapter tracking and cloud-saved notes still need to be
-        added separately.
-      </p>
-      <button class="secondary" onclick="signOut()">Sign Out</button>
-    </div>
-
-    <div class="tiles">
-      <div class="tile">
-        <strong>PCM</strong>
-        <span>Physics · Chemistry · Maths</span>
-      </div>
-      <div class="tile">
-        <strong>Consistency</strong>
-        <span>One focused session at a time</span>
-      </div>
-      <div class="tile">
-        <strong>Your goal</strong>
-        <span>Prepare. Practise. Improve.</span>
-      </div>
+  <section class="quote-card">
+    <div class="quote-mark">“</div>
+    <p id="quoteText"></p>
+    <div class="quote-footer">
+      <span id="quoteAuthor"></span>
+      <button class="quote-btn" onclick="nextQuote()">Another thought ↗</button>
     </div>
   </section>
+
+  <section class="stats">
+    <div class="stat">
+      <div class="stat-label">Chapters completed</div>
+      <div class="stat-value" id="completedStat">0</div>
+      <div class="stat-note">Across all subjects</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Total chapters</div>
+      <div class="stat-value" id="totalStat">0</div>
+      <div class="stat-note">Your current study list</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Study time</div>
+      <div class="stat-value" id="studyStat">0m</div>
+      <div class="stat-note">Completed timer sessions</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Overall progress</div>
+      <div class="stat-value" id="overallStat">0%</div>
+      <div class="stat-note">Keep moving forward</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-heading">
+      <div>
+        <h2>Your subjects</h2>
+        <p>Track your syllabus without pressure.</p>
+      </div>
+    </div>
+
+    <div class="subjects">
+      <article class="subject-card">
+        <div class="subject-top">
+          <div class="subject-icon">⚛</div>
+          <span class="eyebrow">01</span>
+        </div>
+        <h3>Physics</h3>
+        <p>Understand the laws behind the universe.</p>
+        <div class="progress-info">
+          <span id="physicsCount">0 / 0 chapters</span>
+          <span id="physicsPercent">0%</span>
+        </div>
+        <div class="progress-line"><div class="progress-fill" id="physicsBar"></div></div>
+        <button class="btn subject-action" onclick="selectSubject('Physics')">View chapters →</button>
+      </article>
+
+      <article class="subject-card">
+        <div class="subject-top">
+          <div class="subject-icon">🧪</div>
+          <span class="eyebrow">02</span>
+        </div>
+        <h3>Chemistry</h3>
+        <p>Connect concepts, reactions and patterns.</p>
+        <div class="progress-info">
+          <span id="chemistryCount">0 / 0 chapters</span>
+          <span id="chemistryPercent">0%</span>
+        </div>
+        <div class="progress-line"><div class="progress-fill" id="chemistryBar"></div></div>
+        <button class="btn subject-action" onclick="selectSubject('Chemistry')">View chapters →</button>
+      </article>
+
+      <article class="subject-card">
+        <div class="subject-top">
+          <div class="subject-icon">∑</div>
+          <span class="eyebrow">03</span>
+        </div>
+        <h3>Mathematics</h3>
+        <p>Make problem-solving your daily habit.</p>
+        <div class="progress-info">
+          <span id="mathematicsCount">0 / 0 chapters</span>
+          <span id="mathematicsPercent">0%</span>
+        </div>
+        <div class="progress-line"><div class="progress-fill" id="mathematicsBar"></div></div>
+        <button class="btn subject-action" onclick="selectSubject('Mathematics')">View chapters →</button>
+      </article>
+    </div>
+  </section>
+
+  <section class="two-col">
+    <div>
+      <div class="section-heading">
+        <div>
+          <h2>Focus timer</h2>
+          <p>Give one task your full attention.</p>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="timer-modes">
+          <button class="mode-btn active" onclick="setTimer(25,this)">25 min</button>
+          <button class="mode-btn" onclick="setTimer(45,this)">45 min</button>
+          <button class="mode-btn" onclick="setTimer(60,this)">60 min</button>
+        </div>
+        <div class="timer-display" id="timerDisplay">25:00</div>
+        <div class="timer-subtitle" id="timerSubtitle">Ready when you are.</div>
+        <div class="timer-controls" style="margin-top:19px">
+          <button class="btn btn-primary" id="timerStart" onclick="toggleTimer()">Start focus</button>
+          <button class="btn" onclick="resetTimer()">Reset</button>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="section-heading">
+        <div>
+          <h2>Quick notes</h2>
+          <p>Keep your thoughts in one place.</p>
+        </div>
+      </div>
+      <div class="panel">
+        <label for="notes">Today's priorities, formulas or reminders</label>
+        <textarea id="notes" class="notes-area" placeholder="1. Revise today's concepts&#10;2. Practise questions&#10;3. Review mistakes"></textarea>
+        <div class="note-status" id="noteStatus">Notes are saved in this browser.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="chapterSection">
+    <div class="section-heading">
+      <div>
+        <h2>Chapter tracker</h2>
+        <p>Add chapters and mark them complete when you're ready.</p>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="field-row">
+        <div>
+          <label for="chapterSubject">Subject</label>
+          <select id="chapterSubject">
+            <option>Physics</option>
+            <option>Chemistry</option>
+            <option>Mathematics</option>
+          </select>
+        </div>
+        <div>
+          <label for="chapterName">Chapter name</label>
+          <input id="chapterName" placeholder="e.g. Laws of Motion" maxlength="100">
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-primary" onclick="addChapter()">+ Add chapter</button>
+        <button class="btn" onclick="exportData()">Export data</button>
+      </div>
+      <div class="section-heading" style="margin-top:28px">
+        <h2 id="chapterHeading" style="font-size:20px">All chapters</h2>
+        <select id="chapterFilter" style="width:auto;max-width:150px" onchange="renderChapters()">
+          <option value="All">All subjects</option>
+          <option>Physics</option>
+          <option>Chemistry</option>
+          <option>Mathematics</option>
+        </select>
+      </div>
+      <div class="chapter-list" id="chapterList"></div>
+    </div>
+  </section>
+
+  <footer>
+    VYORA JEE · Stay curious. Stay consistent. Keep growing.
+    <br><br>
+    Your data stays in this browser. Export a backup before clearing browser data.
+  </footer>
+
 </main>
 
-<footer>VYORA JEE · Focus on progress, not perfection.</footer>
-
 <script>
-  // ==========================================================
-  // SUPABASE CONFIGURATION — ADD YOUR DETAILS HERE
-  // ==========================================================
+const STORAGE_KEY = "vyora_study_dashboard_v1";
 
-  const SUPABASE_URL = "PASTE_YOUR_PROJECT_URL_HERE";
-  const SUPABASE_PUBLISHABLE_KEY = "PASTE_YOUR_PUBLISHABLE_KEY_HERE";
+const defaultData = {
+  chapters: [
+    {id:1,subject:"Physics",name:"Units and Measurements",done:false},
+    {id:2,subject:"Physics",name:"Motion in a Straight Line",done:false},
+    {id:3,subject:"Physics",name:"Laws of Motion",done:false},
+    {id:4,subject:"Chemistry",name:"Some Basic Concepts of Chemistry",done:false},
+    {id:5,subject:"Chemistry",name:"Atomic Structure",done:false},
+    {id:6,subject:"Chemistry",name:"Chemical Bonding",done:false},
+    {id:7,subject:"Mathematics",name:"Sets",done:false},
+    {id:8,subject:"Mathematics",name:"Trigonometric Functions",done:false},
+    {id:9,subject:"Mathematics",name:"Quadratic Equations",done:false}
+  ],
+  studyMinutes: 0,
+  notes: ""
+};
 
-  // Example URL format:
-  // https://your-project-id.supabase.co
-  //
-  // The publishable key usually begins with:
-  // sb_publishable_
-  //
-  // NEVER paste a secret key or service_role key here.
+function loadData() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    if (!saved || !Array.isArray(saved.chapters)) return structuredClone(defaultData);
+    return {...defaultData, ...saved};
+  } catch {
+    return JSON.parse(JSON.stringify(defaultData));
+  }
+}
 
-  // ==========================================================
-  // CONNECTION AND AUTHENTICATION
-  // ==========================================================
+let data = loadData();
 
-  let supabaseClient = null;
-  let currentMode = "signin";
+function saveData() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  } catch {
+    alert("Could not save data. Please export a backup.");
+  }
+}
 
-  const message = document.getElementById("message");
-  const status = document.getElementById("connectionStatus");
+const quotes = [
+  ["It always seems impossible until it's done.", "Nelson Mandela"],
+  ["Great things are done by a series of small things brought together.", "Vincent van Gogh"],
+  ["The secret of getting ahead is getting started.", "Mark Twain"],
+  ["Success is the sum of small efforts, repeated day in and day out.", "Robert Collier"],
+  ["It does not matter how slowly you go as long as you do not stop.", "Often attributed to Confucius"],
+  ["The future depends on what you do today.", "Mahatma Gandhi"],
+  ["You don't have to see the whole staircase, just take the first step.", "Martin Luther King Jr."],
+  ["Learning never exhausts the mind.", "Leonardo da Vinci"],
+  ["Dreams do not work unless you do.", "John C. Maxwell"],
+  ["Focus on progress, not perfection.", "A reminder for today"],
+  ["The expert in anything was once a beginner.", "Often attributed to Helen Hayes"],
+  ["Discipline is choosing what you want most over what you want now.", "A popular modern saying"],
+  ["A little progress each day adds up to big results.", "A reminder for today"],
+  ["Difficult roads often lead to beautiful destinations.", "A popular modern saying"]
+];
 
-  function showMessage(text) {
-    message.textContent = text;
+let quoteIndex = Math.floor(Date.now() / 86400000) % quotes.length;
+
+function showQuote() {
+  document.getElementById("quoteText").textContent = quotes[quoteIndex][0];
+  document.getElementById("quoteAuthor").textContent = "— " + quotes[quoteIndex][1];
+}
+
+function nextQuote() {
+  quoteIndex = (quoteIndex + 1) % quotes.length;
+  showQuote();
+}
+
+document.getElementById("todayDate").textContent =
+  new Date().toLocaleDateString(undefined, {
+    weekday:"short", day:"numeric", month:"short", year:"numeric"
+  });
+
+function subjectSlug(subject) {
+  return subject.toLowerCase();
+}
+
+function getSubjectChapters(subject) {
+  return data.chapters.filter(c => c.subject === subject);
+}
+
+function renderStats() {
+  const completed = data.chapters.filter(c => c.done).length;
+  const total = data.chapters.length;
+  const percent = total ? Math.round(completed / total * 100) : 0;
+
+  document.getElementById("completedStat").textContent = completed;
+  document.getElementById("totalStat").textContent = total;
+  document.getElementById("studyStat").textContent =
+    data.studyMinutes >= 60
+      ? Math.floor(data.studyMinutes / 60) + "h" +
+        (data.studyMinutes % 60 ? " " + data.studyMinutes % 60 + "m" : "")
+      : data.studyMinutes + "m";
+  document.getElementById("overallStat").textContent = percent + "%";
+
+  ["Physics","Chemistry","Mathematics"].forEach(subject => {
+    const chapters = getSubjectChapters(subject);
+    const done = chapters.filter(c => c.done).length;
+    const pct = chapters.length ? Math.round(done / chapters.length * 100) : 0;
+    const slug = subjectSlug(subject);
+
+    document.getElementById(slug + "Count").textContent =
+      done + " / " + chapters.length + " chapters";
+    document.getElementById(slug + "Percent").textContent = pct + "%";
+    document.getElementById(slug + "Bar").style.width = pct + "%";
+  });
+}
+
+function renderChapters() {
+  const filter = document.getElementById("chapterFilter").value;
+  const list = document.getElementById("chapterList");
+  const chapters = data.chapters.filter(c =>
+    filter === "All" || c.subject === filter
+  );
+
+  list.innerHTML = "";
+
+  if (!chapters.length) {
+    list.innerHTML = '<div class="empty">No chapters here yet. Add one above to get started.</div>';
+    return;
   }
 
-  function initSupabase() {
-    if (
-      SUPABASE_URL === "https://kmhmmxdfadwcucaleswz.supabase.co/rest/v1/" ||
-      SUPABASE_PUBLISHABLE_KEY === "sb_publishable_D6KDjqyEZ7RCEU__oCJtrg_0AvEouWe"
-    ) {
-      status.textContent = "Supabase setup required";
-      showMessage("Add your Supabase URL and publishable key in the code.");
-      return;
-    }
+  chapters.forEach(chapter => {
+    const item = document.createElement("div");
+    item.className = "chapter-item" + (chapter.done ? " done" : "");
 
-    if (!window.supabase) {
-      status.textContent = "Library failed to load";
-      showMessage("Refresh the page and check your internet connection.");
-      return;
-    }
-
-    try {
-      supabaseClient = window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_PUBLISHABLE_KEY,
-        {
-          auth: {
-            persistSession: true,
-            autoRefreshToken: true,
-            detectSessionInUrl: true
-          }
-        }
-      );
-
-      status.textContent = "Supabase configured";
-
-      supabaseClient.auth.onAuthStateChange((_event, session) => {
-        renderSession(session);
-      });
-
-      supabaseClient.auth.getSession().then(({ data, error }) => {
-        if (error) {
-          showMessage(error.message);
-          return;
-        }
-        renderSession(data.session);
-      });
-    } catch (error) {
-      status.textContent = "Connection setup error";
-      showMessage(error.message || "Could not initialize Supabase.");
-    }
-  }
-
-  function renderSession(session) {
-    const signedIn = Boolean(session?.user);
-
-    document.getElementById("authCard").style.display =
-      signedIn ? "none" : "block";
-
-    document.getElementById("dashboard").style.display =
-      signedIn ? "block" : "none";
-
-    if (signedIn) {
-      document.getElementById("welcome").textContent =
-        "Signed in as " + session.user.email;
-      status.textContent = "Account signed in";
-    } else if (supabaseClient) {
-      status.textContent = "Ready to sign in";
-    }
-  }
-
-  function readCredentials() {
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value;
-
-    if (!supabaseClient) {
-      showMessage("Supabase is not configured. Check the code section.");
-      return null;
-    }
-
-    if (!email || !password) {
-      showMessage("Enter both your email and password.");
-      return null;
-    }
-
-    if (password.length < 6) {
-      showMessage("Your password must contain at least 6 characters.");
-      return null;
-    }
-
-    return { email, password };
-  }
-
-  async function signUp() {
-    const credentials = readCredentials();
-    if (!credentials) return;
-
-    showMessage("Creating your account...");
-
-    const { data, error } = await supabaseClient.auth.signUp({
-      email: credentials.email,
-      password: credentials.password,
-      options: {
-        emailRedirectTo: window.location.href.split("#")[0]
-      }
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.checked = chapter.done;
+    checkbox.setAttribute("aria-label", "Mark " + chapter.name + " complete");
+    checkbox.addEventListener("change", () => {
+      chapter.done = checkbox.checked;
+      saveData();
+      renderStats();
+      renderChapters();
     });
 
-    if (error) {
-      showMessage(error.message);
-      return;
-    }
+    const info = document.createElement("div");
+    info.className = "chapter-name";
+    info.textContent = chapter.name;
 
-    if (data.session) {
-      showMessage("Account created successfully.");
-      renderSession(data.session);
-    } else {
-      showMessage(
-        "Signup submitted. Check your email for the confirmation link."
-      );
-    }
+    const subject = document.createElement("div");
+    subject.className = "small";
+    subject.textContent = chapter.subject;
+
+    const remove = document.createElement("button");
+    remove.className = "delete-btn";
+    remove.textContent = "×";
+    remove.setAttribute("aria-label", "Delete " + chapter.name);
+    remove.addEventListener("click", () => {
+      if (!confirm("Delete this chapter?")) return;
+      data.chapters = data.chapters.filter(c => c.id !== chapter.id);
+      saveData();
+      renderAll();
+    });
+
+    const nameWrap = document.createElement("div");
+    nameWrap.style.flex = "1";
+    nameWrap.append(info, subject);
+    item.append(checkbox, nameWrap, remove);
+    list.appendChild(item);
+  });
+}
+
+function addChapter() {
+  const subject = document.getElementById("chapterSubject").value;
+  const input = document.getElementById("chapterName");
+  const name = input.value.trim();
+
+  if (!name) {
+    input.focus();
+    alert("Please enter a chapter name.");
+    return;
   }
 
-  async function signIn() {
-    const credentials = readCredentials();
-    if (!credentials) return;
+  data.chapters.push({
+    id: Date.now() + Math.random(),
+    subject,
+    name,
+    done: false
+  });
 
-    showMessage("Signing in...");
+  input.value = "";
+  document.getElementById("chapterFilter").value = "All";
+  saveData();
+  renderAll();
+}
 
-    const { data, error } =
-      await supabaseClient.auth.signInWithPassword(credentials);
+function selectSubject(subject) {
+  document.getElementById("chapterFilter").value = subject;
+  document.getElementById("chapterHeading").textContent = subject + " chapters";
+  renderChapters();
+  document.getElementById("chapterSection").scrollIntoView({behavior:"smooth"});
+}
 
-    if (error) {
-      showMessage(error.message);
-      return;
-    }
+document.getElementById("chapterFilter").addEventListener("change", () => {
+  const filter = document.getElementById("chapterFilter").value;
+  document.getElementById("chapterHeading").textContent =
+    filter === "All" ? "All chapters" : filter + " chapters";
+});
 
-    renderSession(data.session);
-    showMessage("Signed in successfully.");
+document.getElementById("notes").value = data.notes || "";
+
+document.getElementById("notes").addEventListener("input", () => {
+  data.notes = document.getElementById("notes").value;
+  saveData();
+  document.getElementById("noteStatus").textContent = "Saved in this browser ✓";
+});
+
+let timerDuration = 25 * 60;
+let remaining = timerDuration;
+let timerRunning = false;
+let timerInterval = null;
+
+function updateTimerDisplay() {
+  const mins = Math.floor(remaining / 60);
+  const secs = remaining % 60;
+  document.getElementById("timerDisplay").textContent =
+    String(mins).padStart(2,"0") + ":" + String(secs).padStart(2,"0");
+}
+
+function setTimer(minutes, button) {
+  if (timerRunning) return;
+  timerDuration = minutes * 60;
+  remaining = timerDuration;
+  updateTimerDisplay();
+
+  document.querySelectorAll(".mode-btn").forEach(b => b.classList.remove("active"));
+  button.classList.add("active");
+
+  document.getElementById("timerSubtitle").textContent = "Ready when you are.";
+}
+
+function toggleTimer() {
+  if (timerRunning) {
+    clearInterval(timerInterval);
+    timerRunning = false;
+    document.getElementById("timerStart").textContent = "Resume focus";
+    document.getElementById("timerSubtitle").textContent = "Timer paused.";
+    return;
   }
 
-  async function signOut() {
-    if (!supabaseClient) return;
+  if (remaining <= 0) resetTimer();
 
-    const { error } = await supabaseClient.auth.signOut();
+  timerRunning = true;
+  document.getElementById("timerStart").textContent = "Pause";
+  document.getElementById("timerSubtitle").textContent = "One task. Full focus.";
 
-    if (error) {
-      showMessage(error.message);
-      return;
+  timerInterval = setInterval(() => {
+    remaining--;
+    updateTimerDisplay();
+
+    if (remaining <= 0) {
+      clearInterval(timerInterval);
+      timerRunning = false;
+      data.studyMinutes += Math.round(timerDuration / 60);
+      saveData();
+      renderStats();
+      document.getElementById("timerStart").textContent = "Start again";
+      document.getElementById("timerSubtitle").textContent = "Session complete. Well done!";
+      alert("Focus session complete! Take a short break.");
     }
+  }, 1000);
+}
 
-    renderSession(null);
-    showMessage("You have signed out.");
-  }
+function resetTimer() {
+  clearInterval(timerInterval);
+  timerRunning = false;
+  remaining = timerDuration;
+  updateTimerDisplay();
+  document.getElementById("timerStart").textContent = "Start focus";
+  document.getElementById("timerSubtitle").textContent = "Ready when you are.";
+}
 
-  initSupabase();
+function exportData() {
+  const blob = new Blob([JSON.stringify(data, null, 2)], {
+    type: "application/json"
+  });
+
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "vyora-jee-backup.json";
+  link.click();
+  URL.revokeObjectURL(url);
+}
+
+function renderAll() {
+  renderStats();
+  renderChapters();
+}
+
+showQuote();
+renderAll();
+updateTimerDisplay();
 </script>
 </body>
 </html>
