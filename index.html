@@ -4,970 +4,373 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#ffffff">
-<title>Vyora JEE — Study Smarter</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
-
+<meta name="theme-color" content="#080d0a">
+<title>Vyora — Your Study Command Center</title>
 <style>
-:root {
-  --bg: #f7f8fa;
-  --white: #ffffff;
-  --text: #20251f;
-  --muted: #7a827b;
-  --green: #477a43;
-  --green-light: #edf5e9;
-  --border: #e8ece7;
-  --shadow: 0 5px 24px rgba(25, 45, 25, .045);
+:root{
+  --bg:#080d0a;--panel:#101812;--panel2:#151f18;
+  --green:#b5ff00;--green2:#67ff87;--white:#f5fff7;
+  --muted:#91a397;--line:#283a2b;--red:#ff7777;
 }
-
-* { box-sizing: border-box; }
-
-html { scroll-behavior: smooth; }
-
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'DM Sans', sans-serif;
+*{box-sizing:border-box}
+body{
+ margin:0;background:
+ radial-gradient(ellipse at 75% 0%,#18321b 0%,transparent 40%),
+ radial-gradient(ellipse at 0% 35%,#112519 0%,transparent 35%),var(--bg);
+ color:var(--white);font:15px/1.5 system-ui,-apple-system,sans-serif;
+ min-height:100vh
 }
-
-button, input, select, textarea { font: inherit; }
-button { cursor: pointer; }
-
-.topbar {
-  height: 72px;
-  background: rgba(255,255,255,.94);
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 6%;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  backdrop-filter: blur(14px);
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible{
+ outline:2px solid var(--green);outline-offset:3px
 }
-
-.logo {
-  font-size: 23px;
-  font-weight: 800;
-  letter-spacing: 2px;
+header{
+ position:sticky;top:0;z-index:5;display:flex;align-items:center;
+ justify-content:space-between;gap:12px;padding:15px 5%;
+ background:#080d0aeb;border-bottom:1px solid #263a2b;
+ backdrop-filter:blur(18px)
 }
-
-.logo span { color: var(--green); }
-
-.top-label {
-  color: var(--muted);
-  font-size: 12px;
+.logo{font-size:25px;font-weight:950;letter-spacing:-1.5px}
+.logo span{color:var(--green);text-shadow:0 0 18px #b5ff0080}
+.tag{font-size:11px;color:var(--muted);letter-spacing:2px}
+.wrap{width:min(1180px,92%);margin:30px auto 70px}
+.hero{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
+.eyebrow{color:var(--green);font-size:11px;font-weight:900;letter-spacing:2.5px}
+h1{font-size:clamp(29px,5vw,48px);line-height:1.12;letter-spacing:-1.7px;margin:8px 0}
+h1 em{font-style:normal;color:var(--green);text-shadow:0 0 24px #aaff0040}
+p{color:var(--muted)}
+select,input,textarea{
+ width:100%;background:#0b120d;color:var(--white);
+ border:1px solid var(--line);border-radius:10px;padding:11px 12px
 }
-
-.layout {
-  max-width: 1160px;
-  margin: 0 auto;
-  padding: 32px 22px 70px;
+select option{background:#101812}
+label{font-size:12px;color:#c3d3c6;display:block;margin-bottom:6px}
+.btn{
+ background:var(--green);color:#101707;border:0;border-radius:10px;
+ padding:11px 16px;font-weight:900;transition:.2s
 }
-
-.greeting {
-  display: flex;
-  justify-content: space-between;
-  align-items: end;
-  gap: 20px;
-  flex-wrap: wrap;
-  margin: 8px 0 28px;
+.btn:hover{box-shadow:0 0 22px #b5ff0050;transform:translateY(-1px)}
+.btn.secondary{background:#17231a;color:var(--green);border:1px solid #3b573b}
+.btn.danger{background:#301718;color:#ffaaaa;border:1px solid #693638}
+.btn.small{padding:7px 10px;font-size:12px}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:24px 0}
+.panel,.stat{
+ background:linear-gradient(145deg,#131e16f5,#0d130fef);
+ border:1px solid var(--line);border-radius:17px;padding:19px;
+ box-shadow:0 8px 35px #00000016
 }
-
-.eyebrow {
-  color: var(--green);
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 2px;
-  text-transform: uppercase;
+.stat{position:relative;overflow:hidden}
+.stat:after{content:"";position:absolute;width:80px;height:80px;border-radius:50%;
+ background:#b5ff000a;right:-20px;top:-22px;filter:blur(2px)}
+.stat .label{color:var(--muted);font-size:12px}
+.stat .num{font-size:29px;font-weight:900;letter-spacing:-1px;margin-top:8px}
+.green{color:var(--green)}
+.sectionhead{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:15px}
+h2{font-size:19px;letter-spacing:-.4px;margin:0}
+h3{font-size:15px;margin:0}
+.mini{font-size:12px;color:var(--muted)}
+.layout{display:grid;grid-template-columns:1.1fr .9fr;gap:17px;margin-bottom:17px}
+.progress{height:7px;background:#26352a;border-radius:20px;overflow:hidden;margin:12px 0}
+.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,#7cff00,#caff5a);
+ border-radius:20px;box-shadow:0 0 12px #aaff0070;transition:width .25s}
+.formrow{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stack{display:grid;gap:10px}
+.item{
+ display:flex;align-items:flex-start;gap:11px;padding:12px;
+ border:1px solid #253629;background:#0b120e;border-radius:12px
 }
-
-h1, h2, h3, p { margin-top: 0; }
-
-h1 {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: clamp(31px, 5vw, 44px);
-  font-weight: 600;
-  letter-spacing: -.8px;
-  margin: 10px 0;
-}
-
-.subtitle {
-  color: var(--muted);
-  line-height: 1.7;
-  margin-bottom: 0;
-}
-
-.date-pill {
-  border: 1px solid var(--border);
-  background: var(--white);
-  padding: 11px 15px;
-  border-radius: 12px;
-  color: var(--muted);
-  font-size: 12px;
-}
-
-.quote-card {
-  background: #f0f5eb;
-  border: 1px solid #e3eddb;
-  border-radius: 20px;
-  padding: 28px 30px;
-  margin-bottom: 25px;
-  position: relative;
-  overflow: hidden;
-}
-
-.quote-mark {
-  color: #a4c598;
-  font-family: Georgia, serif;
-  font-size: 64px;
-  line-height: .7;
-  margin-bottom: 12px;
-}
-
-#quoteText {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: clamp(20px, 3vw, 27px);
-  line-height: 1.55;
-  max-width: 790px;
-  margin-bottom: 13px;
-}
-
-#quoteAuthor {
-  color: var(--green);
-  font-size: 12px;
-  font-weight: 700;
-}
-
-.quote-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.quote-btn {
-  border: 1px solid #d6e4cd;
-  border-radius: 10px;
-  background: #ffffffa8;
-  padding: 9px 13px;
-  color: var(--green);
-  font-size: 12px;
-  font-weight: 700;
-}
-
-.stats {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 15px;
-  margin-bottom: 28px;
-}
-
-.stat {
-  padding: 21px;
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: 17px;
-  box-shadow: var(--shadow);
-}
-
-.stat-label {
-  color: var(--muted);
-  font-size: 12px;
-  margin-bottom: 13px;
-}
-
-.stat-value {
-  font-size: 29px;
-  font-weight: 800;
-  letter-spacing: -1px;
-}
-
-.stat-note {
-  color: var(--muted);
-  font-size: 11px;
-  margin-top: 8px;
-}
-
-.section-heading {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin: 35px 0 16px;
-}
-
-.section-heading h2 {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: 25px;
-  font-weight: 600;
-  margin: 0;
-}
-
-.section-heading p {
-  font-size: 12px;
-  color: var(--muted);
-  margin: 5px 0 0;
-}
-
-.btn {
-  border: 1px solid var(--border);
-  background: var(--white);
-  color: var(--text);
-  border-radius: 10px;
-  padding: 11px 15px;
-  font-size: 12px;
-  font-weight: 700;
-}
-
-.btn-primary {
-  background: var(--green);
-  border-color: var(--green);
-  color: white;
-}
-
-.btn:hover { opacity: .85; }
-
-.subjects {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 15px;
-}
-
-.subject-card {
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: 17px;
-  padding: 21px;
-  box-shadow: var(--shadow);
-}
-
-.subject-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 16px;
-}
-
-.subject-icon {
-  width: 42px;
-  height: 42px;
-  border-radius: 13px;
-  display: grid;
-  place-items: center;
-  font-size: 19px;
-  background: var(--green-light);
-}
-
-.subject-card h3 {
-  margin-bottom: 6px;
-  font-size: 17px;
-}
-
-.subject-card p {
-  font-size: 12px;
-  color: var(--muted);
-  margin-bottom: 17px;
-}
-
-.progress-line {
-  height: 6px;
-  background: #edf0ec;
-  border-radius: 20px;
-  overflow: hidden;
-  margin: 12px 0 9px;
-}
-
-.progress-fill {
-  height: 100%;
-  background: var(--green);
-  border-radius: inherit;
-  width: 0;
-  transition: width .25s;
-}
-
-.progress-info {
-  display: flex;
-  justify-content: space-between;
-  color: var(--muted);
-  font-size: 11px;
-}
-
-.subject-action {
-  width: 100%;
-  margin-top: 17px;
-}
-
-.panel {
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: 17px;
-  padding: 23px;
-  box-shadow: var(--shadow);
-}
-
-.two-col {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 17px;
-}
-
-.timer-display {
-  font-size: clamp(48px, 9vw, 66px);
-  font-weight: 700;
-  letter-spacing: -3px;
-  text-align: center;
-  margin: 17px 0;
-  font-variant-numeric: tabular-nums;
-}
-
-.timer-subtitle {
-  color: var(--muted);
-  font-size: 12px;
-  text-align: center;
-}
-
-.timer-controls {
-  display: flex;
-  justify-content: center;
-  gap: 9px;
-  flex-wrap: wrap;
-}
-
-.timer-modes {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.mode-btn {
-  border: 1px solid var(--border);
-  background: #fff;
-  padding: 8px 12px;
-  border-radius: 9px;
-  color: var(--muted);
-  font-size: 11px;
-}
-
-.mode-btn.active {
-  color: var(--green);
-  background: var(--green-light);
-  border-color: #d5e6cb;
-}
-
-input, select, textarea {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  background: #fff;
-  color: var(--text);
-  outline: none;
-}
-
-input:focus, select:focus, textarea:focus {
-  border-color: #8cb486;
-}
-
-label {
-  display: block;
-  font-size: 12px;
-  color: var(--muted);
-  margin: 15px 0 7px;
-}
-
-.field-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-
-.form-actions {
-  display: flex;
-  gap: 9px;
-  margin-top: 15px;
-}
-
-.form-actions button { flex: 1; }
-
-.chapter-list {
-  display: flex;
-  flex-direction: column;
-  gap: 9px;
-}
-
-.chapter-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 13px;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-}
-
-.chapter-item input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
-  accent-color: var(--green);
-  flex-shrink: 0;
-}
-
-.chapter-name {
-  flex: 1;
-  font-size: 13px;
-  overflow-wrap: anywhere;
-}
-
-.chapter-item.done .chapter-name {
-  text-decoration: line-through;
-  color: var(--muted);
-}
-
-.delete-btn {
-  border: 0;
-  background: transparent;
-  color: #9b7777;
-  font-size: 18px;
-  padding: 3px 7px;
-}
-
-.empty {
-  color: var(--muted);
-  font-size: 13px;
-  padding: 15px 0;
-  line-height: 1.7;
-}
-
-.notes-area {
-  min-height: 170px;
-  resize: vertical;
-  line-height: 1.7;
-}
-
-.note-status {
-  color: var(--muted);
-  font-size: 11px;
-  margin-top: 8px;
-}
-
-footer {
-  text-align: center;
-  color: var(--muted);
-  font-size: 11px;
-  padding: 30px 10px 5px;
-}
-
-@media (max-width: 760px) {
-  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .subjects { grid-template-columns: 1fr; }
-  .two-col { grid-template-columns: 1fr; }
-  .layout { padding: 24px 15px 50px; }
-  .topbar { padding: 0 17px; }
-  .quote-card { padding: 23px 20px; }
-}
-
-@media (max-width: 360px) {
-  .stat { padding: 15px; }
-  .stat-value { font-size: 24px; }
-  .field-row { grid-template-columns: 1fr; }
-}
+.item input[type=checkbox]{width:17px;height:17px;accent-color:var(--green);flex-shrink:0;margin-top:4px}
+.item .main{flex:1;min-width:0}
+.item.done .taskname{text-decoration:line-through;color:#84988a}
+.taskname{font-weight:700;overflow-wrap:anywhere}
+.taskmeta{font-size:11px;color:var(--muted);margin-top:3px}
+.empty{border:1px dashed #344738;padding:24px;text-align:center;border-radius:12px;color:var(--muted)}
+.chapter{border:1px solid var(--line);border-radius:13px;overflow:hidden;margin-bottom:10px;background:#0b120e}
+.chaphead{display:flex;align-items:center;gap:10px;padding:13px;background:#111b14}
+.chaphead .main{flex:1;min-width:0}
+.subs{padding:5px 12px 12px}
+.subrow{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-top:1px solid #1d2a20}
+.subrow input{width:16px;height:16px;accent-color:var(--green);margin-top:4px;flex-shrink:0}
+.subrow .main{flex:1;min-width:0}
+.pill{display:inline-block;border:1px solid #405c2b;color:var(--green);
+ border-radius:20px;padding:3px 8px;font-size:10px;font-weight:800}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}
+.tab{border:1px solid var(--line);background:#101812;color:#c4d3c7;border-radius:9px;padding:9px 14px;font-weight:750}
+.tab.active{background:#b5ff0012;color:var(--green);border-color:#9ad800}
+.hidden{display:none!important}
+footer{text-align:center;padding:25px;color:#718174;font-size:12px}
+.quote{border-left:3px solid var(--green);padding:12px 15px;background:#b5ff0008;border-radius:0 10px 10px 0;color:#d8e6d9;margin-top:15px}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
+ background:var(--green);color:#0b1207;font-weight:800;padding:11px 18px;
+ border-radius:10px;z-index:20;display:none;box-shadow:0 0 25px #b5ff0040}
+@media(max-width:800px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.layout{grid-template-columns:1fr}}
+@media(max-width:430px){header{padding:12px 4%}.tag{display:none}.wrap{width:92%;margin-top:22px}.panel{padding:14px}.stat{padding:14px}.stat .num{font-size:25px}.formrow{grid-template-columns:1fr}}
 </style>
 </head>
-
 <body>
-
-<header class="topbar">
-  <div class="logo">VYORA<span>.</span></div>
-  <div class="top-label">YOUR JEE JOURNEY · YOUR PACE</div>
+<header>
+  <div><div class="logo"><span>V</span>YORA<span>.</span></div>
+  <div class="tag">YOUR STUDY COMMAND CENTER</div></div>
+  <button class="btn secondary small" id="exportBtn">Export data ↗</button>
 </header>
 
-<main class="layout">
-
-  <section class="greeting">
+<main class="wrap">
+  <section class="hero">
     <div>
-      <div class="eyebrow">Your personal study space</div>
-      <h1>Small steps. <span style="color:#477a43">Big dreams.</span></h1>
-      <p class="subtitle">Build consistency, one focused session at a time.</p>
+      <div class="eyebrow">DISCIPLINE BUILDS DESTINY</div>
+      <h1>Make every day <em>count.</em></h1>
+      <p>One goal. One plan. One step closer.</p>
     </div>
-    <div class="date-pill" id="todayDate"></div>
-  </section>
-
-  <section class="quote-card">
-    <div class="quote-mark">“</div>
-    <p id="quoteText"></p>
-    <div class="quote-footer">
-      <span id="quoteAuthor"></span>
-      <button class="quote-btn" onclick="nextQuote()">Another thought ↗</button>
+    <div style="min-width:190px">
+      <label for="exam">Choose your mission</label>
+      <select id="exam">
+        <option value="JEE">JEE — Engineering</option>
+        <option value="NEET">NEET — Medical</option>
+        <option value="UPSC">UPSC — Civil Services</option>
+      </select>
     </div>
   </section>
 
-  <section class="stats">
-    <div class="stat">
-      <div class="stat-label">Chapters completed</div>
-      <div class="stat-value" id="completedStat">0</div>
-      <div class="stat-note">Across all subjects</div>
-    </div>
-    <div class="stat">
-      <div class="stat-label">Total chapters</div>
-      <div class="stat-value" id="totalStat">0</div>
-      <div class="stat-note">Your current study list</div>
-    </div>
-    <div class="stat">
-      <div class="stat-label">Study time</div>
-      <div class="stat-value" id="studyStat">0m</div>
-      <div class="stat-note">Completed timer sessions</div>
-    </div>
-    <div class="stat">
-      <div class="stat-label">Overall progress</div>
-      <div class="stat-value" id="overallStat">0%</div>
-      <div class="stat-note">Keep moving forward</div>
-    </div>
+  <section class="grid">
+    <div class="stat"><div class="label">SYLLABUS COMPLETED</div><div class="num green" id="overall">0%</div><div class="progress"><span id="overallBar"></span></div></div>
+    <div class="stat"><div class="label">CHAPTERS FINISHED</div><div class="num" id="finished">0</div><div class="mini" id="chapterTotal">of 0 chapters</div></div>
+    <div class="stat"><div class="label">PENDING TASKS</div><div class="num" id="pending">0</div><div class="mini">Keep moving forward</div></div>
+    <div class="stat"><div class="label">DAILY ROUTINE</div><div class="num" id="routineCount">0/0</div><div class="mini">tasks completed today</div></div>
   </section>
 
-  <section>
-    <div class="section-heading">
-      <div>
-        <h2>Your subjects</h2>
-        <p>Track your syllabus without pressure.</p>
-      </div>
-    </div>
-
-    <div class="subjects">
-      <article class="subject-card">
-        <div class="subject-top">
-          <div class="subject-icon">⚛</div>
-          <span class="eyebrow">01</span>
-        </div>
-        <h3>Physics</h3>
-        <p>Understand the laws behind the universe.</p>
-        <div class="progress-info">
-          <span id="physicsCount">0 / 0 chapters</span>
-          <span id="physicsPercent">0%</span>
-        </div>
-        <div class="progress-line"><div class="progress-fill" id="physicsBar"></div></div>
-        <button class="btn subject-action" onclick="selectSubject('Physics')">View chapters →</button>
-      </article>
-
-      <article class="subject-card">
-        <div class="subject-top">
-          <div class="subject-icon">🧪</div>
-          <span class="eyebrow">02</span>
-        </div>
-        <h3>Chemistry</h3>
-        <p>Connect concepts, reactions and patterns.</p>
-        <div class="progress-info">
-          <span id="chemistryCount">0 / 0 chapters</span>
-          <span id="chemistryPercent">0%</span>
-        </div>
-        <div class="progress-line"><div class="progress-fill" id="chemistryBar"></div></div>
-        <button class="btn subject-action" onclick="selectSubject('Chemistry')">View chapters →</button>
-      </article>
-
-      <article class="subject-card">
-        <div class="subject-top">
-          <div class="subject-icon">∑</div>
-          <span class="eyebrow">03</span>
-        </div>
-        <h3>Mathematics</h3>
-        <p>Make problem-solving your daily habit.</p>
-        <div class="progress-info">
-          <span id="mathematicsCount">0 / 0 chapters</span>
-          <span id="mathematicsPercent">0%</span>
-        </div>
-        <div class="progress-line"><div class="progress-fill" id="mathematicsBar"></div></div>
-        <button class="btn subject-action" onclick="selectSubject('Mathematics')">View chapters →</button>
-      </article>
-    </div>
-  </section>
-
-  <section class="two-col">
-    <div>
-      <div class="section-heading">
-        <div>
-          <h2>Focus timer</h2>
-          <p>Give one task your full attention.</p>
-        </div>
-      </div>
-      <div class="panel">
-        <div class="timer-modes">
-          <button class="mode-btn active" onclick="setTimer(25,this)">25 min</button>
-          <button class="mode-btn" onclick="setTimer(45,this)">45 min</button>
-          <button class="mode-btn" onclick="setTimer(60,this)">60 min</button>
-        </div>
-        <div class="timer-display" id="timerDisplay">25:00</div>
-        <div class="timer-subtitle" id="timerSubtitle">Ready when you are.</div>
-        <div class="timer-controls" style="margin-top:19px">
-          <button class="btn btn-primary" id="timerStart" onclick="toggleTimer()">Start focus</button>
-          <button class="btn" onclick="resetTimer()">Reset</button>
-        </div>
-      </div>
-    </div>
-
-    <div>
-      <div class="section-heading">
-        <div>
-          <h2>Quick notes</h2>
-          <p>Keep your thoughts in one place.</p>
-        </div>
-      </div>
-      <div class="panel">
-        <label for="notes">Today's priorities, formulas or reminders</label>
-        <textarea id="notes" class="notes-area" placeholder="1. Revise today's concepts&#10;2. Practise questions&#10;3. Review mistakes"></textarea>
-        <div class="note-status" id="noteStatus">Notes are saved in this browser.</div>
-      </div>
-    </div>
-  </section>
-
-  <section id="chapterSection">
-    <div class="section-heading">
-      <div>
-        <h2>Chapter tracker</h2>
-        <p>Add chapters and mark them complete when you're ready.</p>
-      </div>
-    </div>
-
+  <section class="layout">
     <div class="panel">
-      <div class="field-row">
-        <div>
-          <label for="chapterSubject">Subject</label>
-          <select id="chapterSubject">
-            <option>Physics</option>
-            <option>Chemistry</option>
-            <option>Mathematics</option>
+      <div class="sectionhead"><h2>Your mission</h2><span class="pill">YOUR GOAL</span></div>
+      <label for="goal">What are you working towards?</label>
+      <input id="goal" maxlength="160" placeholder="e.g. Crack JEE Advanced with a strong rank">
+      <div class="formrow" style="margin-top:12px">
+        <div><label for="deadline">Target date</label><input type="date" id="deadline"></div>
+        <div><label for="hours">Daily study target (hours)</label><input type="number" id="hours" min="1" max="18" value="6"></div>
+      </div>
+      <button class="btn" id="saveGoal" style="margin-top:13px;width:100%">Save my mission</button>
+      <div class="quote" id="goalDisplay">Your goal deserves a plan. Set your mission above.</div>
+    </div>
+    <div class="panel">
+      <div class="sectionhead"><h2>Today's focus</h2><span class="pill" id="today"></span></div>
+      <p class="mini">Add the work you want to finish today.</p>
+      <form id="routineForm" class="stack">
+        <input id="routineName" maxlength="120" placeholder="e.g. Revise quadratic equations" required>
+        <div class="formrow">
+          <select id="routineSubject" aria-label="Subject">
+            <option>Physics</option><option>Chemistry</option><option>Mathematics</option>
+            <option>Biology</option><option>History</option><option>Geography</option>
+            <option>Polity</option><option>Economy</option><option>Current Affairs</option>
+            <option>Other</option>
           </select>
+          <input id="routineTime" maxlength="30" placeholder="Time e.g. 5–6 PM">
         </div>
-        <div>
-          <label for="chapterName">Chapter name</label>
-          <input id="chapterName" placeholder="e.g. Laws of Motion" maxlength="100">
-        </div>
-      </div>
-      <div class="form-actions">
-        <button class="btn btn-primary" onclick="addChapter()">+ Add chapter</button>
-        <button class="btn" onclick="exportData()">Export data</button>
-      </div>
-      <div class="section-heading" style="margin-top:28px">
-        <h2 id="chapterHeading" style="font-size:20px">All chapters</h2>
-        <select id="chapterFilter" style="width:auto;max-width:150px" onchange="renderChapters()">
-          <option value="All">All subjects</option>
-          <option>Physics</option>
-          <option>Chemistry</option>
-          <option>Mathematics</option>
-        </select>
-      </div>
-      <div class="chapter-list" id="chapterList"></div>
+        <button class="btn">+ Add to routine</button>
+      </form>
+      <div class="stack" id="routineList" style="margin-top:14px"></div>
     </div>
   </section>
 
-  <footer>
-    VYORA JEE · Stay curious. Stay consistent. Keep growing.
-    <br><br>
-    Your data stays in this browser. Export a backup before clearing browser data.
-  </footer>
+  <section class="panel" style="margin-bottom:17px">
+    <div class="sectionhead"><h2>Pending work & tasks</h2><button class="btn secondary small" id="addPending">+ Add task</button></div>
+    <p class="mini">Keep assignments, revision and practice work in one place.</p>
+    <form id="pendingForm" class="formrow hidden" style="margin:12px 0">
+      <input id="pendingName" maxlength="140" placeholder="What needs to be done?" required>
+      <button class="btn">Save task</button>
+    </form>
+    <div class="stack" id="pendingList"></div>
+  </section>
 
+  <section class="panel">
+    <div class="sectionhead"><h2>Chapter control center</h2><span class="pill">TRACK EVERY TOPIC</span></div>
+    <p class="mini">Tick off each subtopic as you learn it. Your progress saves automatically on this device.</p>
+    <div class="tabs" id="subjectTabs"></div>
+    <div class="formrow" style="margin-bottom:15px">
+      <input id="chapterSearch" placeholder="Search chapters or subtopics..." aria-label="Search chapters">
+      <select id="chapterFilter" aria-label="Filter chapters">
+        <option value="all">All chapters</option>
+        <option value="pending">Pending chapters</option>
+        <option value="progress">In progress</option>
+        <option value="done">Completed chapters</option>
+      </select>
+    </div>
+    <div id="chapterList"></div>
+    <div class="quote">Small progress every day becomes extraordinary progress over time.</div>
+  </section>
+  <footer>VYORA · FOCUS ON PROGRESS, NOT PERFECTION.<br>Personal study tracker · No account required</footer>
 </main>
+<div id="toast" role="status" aria-live="polite"></div>
 
 <script>
-const STORAGE_KEY = "vyora_study_dashboard_v1";
+const $ = id => document.getElementById(id);
+const KEY = "vyora_neon_tracker_v1";
+const todayKey = () => {
+  const d = new Date();
+  return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+};
+const todayLabel = () => new Date().toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric"});
+const uid = () => Date.now().toString(36)+Math.random().toString(36).slice(2,8);
 
-const defaultData = {
-  chapters: [
-    {id:1,subject:"Physics",name:"Units and Measurements",done:false},
-    {id:2,subject:"Physics",name:"Motion in a Straight Line",done:false},
-    {id:3,subject:"Physics",name:"Laws of Motion",done:false},
-    {id:4,subject:"Chemistry",name:"Some Basic Concepts of Chemistry",done:false},
-    {id:5,subject:"Chemistry",name:"Atomic Structure",done:false},
-    {id:6,subject:"Chemistry",name:"Chemical Bonding",done:false},
-    {id:7,subject:"Mathematics",name:"Sets",done:false},
-    {id:8,subject:"Mathematics",name:"Trigonometric Functions",done:false},
-    {id:9,subject:"Mathematics",name:"Quadratic Equations",done:false}
+// Starter topic lists. Expand or edit these lists to match your own syllabus.
+const syllabus = {
+ JEE:{
+  Physics:[
+   ["Units & Measurements","SI units","Dimensions","Errors in measurement"],
+   ["Kinematics","Motion in a straight line","Motion in a plane","Projectile motion"],
+   ["Laws of Motion","Newton's laws","Friction","Circular motion"],
+   ["Work, Energy & Power","Work-energy theorem","Potential energy","Power and collisions"],
+   ["Rotational Motion","Torque","Angular momentum","Moment of inertia"],
+   ["Thermodynamics","First law","Heat engines","Thermodynamic processes"],
+   ["Electrostatics","Coulomb's law","Electric field","Electric potential"],
+   ["Current Electricity","Ohm's law","Kirchhoff's laws","Electrical circuits"],
+   ["Optics","Ray optics","Wave optics","Optical instruments"],
+   ["Modern Physics","Photoelectric effect","Atoms and nuclei","Semiconductors"]
   ],
-  studyMinutes: 0,
-  notes: ""
+  Chemistry:[
+   ["Some Basic Concepts","Mole concept","Stoichiometry","Concentration terms"],
+   ["Atomic Structure","Bohr model","Quantum numbers","Electronic configuration"],
+   ["Chemical Bonding","Lewis structures","VSEPR theory","Hybridisation"],
+   ["Chemical Thermodynamics","Enthalpy","Entropy","Gibbs energy"],
+   ["Equilibrium","Chemical equilibrium","Ionic equilibrium","pH and buffers"],
+   ["Redox Reactions","Oxidation number","Balancing redox equations"],
+   ["Electrochemistry","Electrochemical cells","Nernst equation","Conductance"],
+   ["Chemical Kinetics","Rate law","Order of reaction","Half-life"],
+   ["Organic Chemistry Basics","IUPAC nomenclature","Isomerism","Reaction mechanisms"],
+   ["Coordination Compounds","Nomenclature","Isomerism","Crystal field basics"]
+  ],
+  Mathematics:[
+   ["Sets, Relations & Functions","Sets","Relations","Functions"],
+   ["Trigonometry","Trigonometric identities","Equations","Inverse trigonometry"],
+   ["Complex Numbers","Algebra of complex numbers","Argand plane","Quadratic equations"],
+   ["Sequences & Series","AP and GP","Special series","Sum of series"],
+   ["Permutations & Combinations","Fundamental principle","Permutations","Combinations"],
+   ["Binomial Theorem","General term","Middle term","Binomial coefficients"],
+   ["Limits & Derivatives","Limits","Continuity","Differentiation"],
+   ["Integral Calculus","Indefinite integrals","Definite integrals","Area under curves"],
+   ["Coordinate Geometry","Straight lines","Circle","Conic sections"],
+   ["Vectors & 3D Geometry","Vector algebra","Lines in 3D","Planes and distances"],
+   ["Probability","Conditional probability","Bayes theorem","Random variables"]
+  ]
+ },
+ NEET:{
+  Physics:[
+   ["Units & Measurements","SI units","Dimensions","Errors"],
+   ["Kinematics","Straight-line motion","Vectors","Projectile motion"],
+   ["Laws of Motion","Newton's laws","Friction","Circular motion"],
+   ["Work, Energy & Power","Work-energy theorem","Conservation of energy","Power"],
+   ["Thermodynamics","First law","Heat engines","Processes"],
+   ["Electrostatics","Electric field","Potential","Capacitance"],
+   ["Current Electricity","Resistance","Kirchhoff's laws","Circuits"],
+   ["Optics","Mirrors and lenses","Wave optics","Optical instruments"],
+   ["Modern Physics","Dual nature","Atoms and nuclei","Semiconductors"]
+  ],
+  Chemistry:[
+   ["Mole Concept","Moles and molar mass","Stoichiometry","Concentration"],
+   ["Atomic Structure","Bohr model","Quantum numbers","Orbitals"],
+   ["Chemical Bonding","Ionic and covalent bonds","VSEPR","Hybridisation"],
+   ["Chemical Equilibrium","Equilibrium constant","Le Chatelier's principle","pH"],
+   ["Solutions","Concentration","Colligative properties","Raoult's law"],
+   ["Electrochemistry","Galvanic cells","Nernst equation","Conductance"],
+   ["Chemical Kinetics","Rate law","Order","Activation energy"],
+   ["Organic Chemistry Basics","Nomenclature","Isomerism","Reaction intermediates"],
+   ["Biomolecules","Carbohydrates","Proteins","Nucleic acids"]
+  ],
+  Biology:[
+   ["The Living World","Taxonomy","Binomial nomenclature","Taxonomic hierarchy"],
+   ["Biological Classification","Five-kingdom system","Monera","Fungi and viruses"],
+   ["Plant Kingdom","Algae","Bryophytes","Pteridophytes and seed plants"],
+   ["Animal Kingdom","Non-chordates","Chordates","Classification features"],
+   ["Cell: The Unit of Life","Cell organelles","Prokaryotes and eukaryotes","Cell membrane"],
+   ["Biomolecules","Carbohydrates","Proteins","Enzymes"],
+   ["Cell Cycle & Division","Interphase","Mitosis","Meiosis"],
+   ["Human Physiology","Digestion","Respiration","Circulation and excretion"],
+   ["Genetics & Evolution","Mendelian inheritance","Molecular genetics","Evolution"],
+   ["Ecology","Ecosystems","Biodiversity","Environmental issues"]
+  ]
+ },
+ UPSC:{
+  History:[
+   ["Ancient India","Indus Valley Civilization","Vedic period","Mauryan Empire"],
+   ["Medieval India","Delhi Sultanate","Mughal Empire","Bhakti and Sufi movements"],
+   ["Modern India","British expansion","Revolt of 1857","Social reform movements"],
+   ["Indian National Movement","Formation of INC","Gandhian movements","Independence and Partition"],
+   ["Post-Independence India","Integration of states","Reorganisation","Major developments"]
+  ],
+  Geography:[
+   ["Physical Geography","Earth's structure","Geomorphology","Climatology"],
+   ["Indian Geography","Physiographic divisions","Rivers","Climate and monsoon"],
+   ["Resources & Agriculture","Soils","Minerals","Agriculture patterns"],
+   ["World Geography","Continents","Oceans","Major climatic regions"],
+   ["Environment & Ecology","Ecosystems","Biodiversity","Climate change"]
+  ],
+  Polity:[
+   ["Constitutional Framework","Constituent Assembly","Preamble","Salient features"],
+   ["Fundamental Rights","Fundamental Rights","Directive Principles","Fundamental Duties"],
+   ["Union Government","President","Prime Minister and Council","Parliament"],
+   ["Judiciary","Supreme Court","High Courts","Judicial review"],
+   ["Federalism","Centre-state relations","Governors","Emergency provisions"],
+   ["Local Government","Panchayati Raj","Municipalities","Local governance"]
+  ],
+  Economy:[
+   ["Basic Economics","Demand and supply","GDP and national income","Inflation"],
+   ["Banking & Finance","RBI","Monetary policy","Financial inclusion"],
+   ["Public Finance","Budget","Taxation","Fiscal deficit"],
+   ["Economic Development","Poverty","Unemployment","Inclusive growth"],
+   ["Agriculture & Industry","Agriculture","Manufacturing","Infrastructure"]
+  ],
+  "Current Affairs":[
+   ["Daily News Analysis","National news","International relations","Science and technology"],
+   ["Government Schemes","Central schemes","Social sector","Implementation"],
+   ["Reports & Indices","Major national reports","International indices","Key findings"]
+  ],
+  "Science & Environment":[
+   ["General Science","Physics basics","Chemistry basics","Biology basics"],
+   ["Science & Technology","Space","Biotechnology","Digital technology"],
+   ["Environment","Ecology","Pollution","Conservation and climate"]
+  ]
+ }
 };
 
-function loadData() {
-  try {
-    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
-    if (!saved || !Array.isArray(saved.chapters)) return structuredClone(defaultData);
-    return {...defaultData, ...saved};
-  } catch {
-    return JSON.parse(JSON.stringify(defaultData));
-  }
+let state = load();
+let activeSubject = "";
+let toastTimer;
+
+function load(){
+ try {
+  const s=JSON.parse(localStorage.getItem(KEY)||"{}");
+  return {exam:s.exam||"JEE",goal:s.goal||"",deadline:s.deadline||"",
+   hours:s.hours||6,routines:s.routines||[],pending:s.pending||[],
+   chapters:s.chapters||{},tab:s.tab||""};
+ } catch(e){return {exam:"JEE",goal:"",deadline:"",hours:6,routines:[],pending:[],chapters:{},tab:""}}
 }
-
-let data = loadData();
-
-function saveData() {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-  } catch {
-    alert("Could not save data. Please export a backup.");
-  }
+function save(){localStorage.setItem(KEY,JSON.stringify(state));renderStats();}
+function notify(msg){
+ $("toast").textContent=msg;$("toast").style.display="block";
+ clearTimeout(toastTimer);toastTimer=setTimeout(()=>$("toast").style.display="none",2200);
 }
-
-const quotes = [
-  ["It always seems impossible until it's done.", "Nelson Mandela"],
-  ["Great things are done by a series of small things brought together.", "Vincent van Gogh"],
-  ["The secret of getting ahead is getting started.", "Mark Twain"],
-  ["Success is the sum of small efforts, repeated day in and day out.", "Robert Collier"],
-  ["It does not matter how slowly you go as long as you do not stop.", "Often attributed to Confucius"],
-  ["The future depends on what you do today.", "Mahatma Gandhi"],
-  ["You don't have to see the whole staircase, just take the first step.", "Martin Luther King Jr."],
-  ["Learning never exhausts the mind.", "Leonardo da Vinci"],
-  ["Dreams do not work unless you do.", "John C. Maxwell"],
-  ["Focus on progress, not perfection.", "A reminder for today"],
-  ["The expert in anything was once a beginner.", "Often attributed to Helen Hayes"],
-  ["Discipline is choosing what you want most over what you want now.", "A popular modern saying"],
-  ["A little progress each day adds up to big results.", "A reminder for today"],
-  ["Difficult roads often lead to beautiful destinations.", "A popular modern saying"]
-];
-
-let quoteIndex = Math.floor(Date.now() / 86400000) % quotes.length;
-
-function showQuote() {
-  document.getElementById("quoteText").textContent = quotes[quoteIndex][0];
-  document.getElementById("quoteAuthor").textContent = "— " + quotes[quoteIndex][1];
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function keyFor(subject,chapter){return state.exam+"::"+subject+"::"+chapter;}
+function subsFor(subject,chapter){
+ const source=syllabus[state.exam][subject].find(x=>x[0]===chapter);
+ const k=keyFor(subject,chapter);
+ if(!state.chapters[k])state.chapters[k]={};
+ return source.slice(1);
 }
-
-function nextQuote() {
-  quoteIndex = (quoteIndex + 1) % quotes.length;
-  showQuote();
+function checked(subject,chapter,sub){
+ return !!(state.chapters[keyFor(subject,chapter)]||{})[sub];
 }
-
-document.getElementById("todayDate").textContent =
-  new Date().toLocaleDateString(undefined, {
-    weekday:"short", day:"numeric", month:"short", year:"numeric"
-  });
-
-function subjectSlug(subject) {
-  return subject.toLowerCase();
+function subjects(){return Object.keys(syllabus[state.exam]);}
+function allChapters(){
+ let arr=[];
+ for(const subject of subjects())for(const ch of syllabus[state.exam][subject]){
+  const subs=ch.slice(1),n=subs.filter(s=>checked(subject,ch[0],s)).length;
+  arr.push({subject,name:ch[0],total:subs.length,done:n,pct:Math.round(n/subs.length*100)});
+ }
+ return arr;
 }
-
-function getSubjectChapters(subject) {
-  return data.chapters.filter(c => c.subject === subject);
-}
-
-function renderStats() {
-  const completed = data.chapters.filter(c => c.done).length;
-  const total = data.chapters.length;
-  const percent = total ? Math.round(completed / total * 100) : 0;
-
-  document.getElementById("completedStat").textContent = completed;
-  document.getElementById("totalStat").textContent = total;
-  document.getElementById("studyStat").textContent =
-    data.studyMinutes >= 60
-      ? Math.floor(data.studyMinutes / 60) + "h" +
-        (data.studyMinutes % 60 ? " " + data.studyMinutes % 60 + "m" : "")
-      : data.studyMinutes + "m";
-  document.getElementById("overallStat").textContent = percent + "%";
-
-  ["Physics","Chemistry","Mathematics"].forEach(subject => {
-    const chapters = getSubjectChapters(subject);
-    const done = chapters.filter(c => c.done).length;
-    const pct = chapters.length ? Math.round(done / chapters.length * 100) : 0;
-    const slug = subjectSlug(subject);
-
-    document.getElementById(slug + "Count").textContent =
-      done + " / " + chapters.length + " chapters";
-    document.getElementById(slug + "Percent").textContent = pct + "%";
-    document.getElementById(slug + "Bar").style.width = pct + "%";
-  });
-}
-
-function renderChapters() {
-  const filter = document.getElementById("chapterFilter").value;
-  const list = document.getElementById("chapterList");
-  const chapters = data.chapters.filter(c =>
-    filter === "All" || c.subject === filter
-  );
-
-  list.innerHTML = "";
-
-  if (!chapters.length) {
-    list.innerHTML = '<div class="empty">No chapters here yet. Add one above to get started.</div>';
-    return;
-  }
-
-  chapters.forEach(chapter => {
-    const item = document.createElement("div");
-    item.className = "chapter-item" + (chapter.done ? " done" : "");
-
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.checked = chapter.done;
-    checkbox.setAttribute("aria-label", "Mark " + chapter.name + " complete");
-    checkbox.addEventListener("change", () => {
-      chapter.done = checkbox.checked;
-      saveData();
-      renderStats();
-      renderChapters();
-    });
-
-    const info = document.createElement("div");
-    info.className = "chapter-name";
-    info.textContent = chapter.name;
-
-    const subject = document.createElement("div");
-    subject.className = "small";
-    subject.textContent = chapter.subject;
-
-    const remove = document.createElement("button");
-    remove.className = "delete-btn";
-    remove.textContent = "×";
-    remove.setAttribute("aria-label", "Delete " + chapter.name);
-    remove.addEventListener("click", () => {
-      if (!confirm("Delete this chapter?")) return;
-      data.chapters = data.chapters.filter(c => c.id !== chapter.id);
-      saveData();
-      renderAll();
-    });
-
-    const nameWrap = document.createElement("div");
-    nameWrap.style.flex = "1";
-    nameWrap.append(info, subject);
-    item.append(checkbox, nameWrap, remove);
-    list.appendChild(item);
-  });
-}
-
-function addChapter() {
-  const subject = document.getElementById("chapterSubject").value;
-  const input = document.getElementById("chapterName");
-  const name = input.value.trim();
-
-  if (!name) {
-    input.focus();
-    alert("Please enter a chapter name.");
-    return;
-  }
-
-  data.chapters.push({
-    id: Date.now() + Math.random(),
-    subject,
-    name,
-    done: false
-  });
-
-  input.value = "";
-  document.getElementById("chapterFilter").value = "All";
-  saveData();
-  renderAll();
-}
-
-function selectSubject(subject) {
-  document.getElementById("chapterFilter").value = subject;
-  document.getElementById("chapterHeading").textContent = subject + " chapters";
-  renderChapters();
-  document.getElementById("chapterSection").scrollIntoView({behavior:"smooth"});
-}
-
-document.getElementById("chapterFilter").addEventListener("change", () => {
-  const filter = document.getElementById("chapterFilter").value;
-  document.getElementById("chapterHeading").textContent =
-    filter === "All" ? "All chapters" : filter + " chapters";
-});
-
-document.getElementById("notes").value = data.notes || "";
-
-document.getElementById("notes").addEventListener("input", () => {
-  data.notes = document.getElementById("notes").value;
-  saveData();
-  document.getElementById("noteStatus").textContent = "Saved in this browser ✓";
-});
-
-let timerDuration = 25 * 60;
-let remaining = timerDuration;
-let timerRunning = false;
-let timerInterval = null;
-
-function updateTimerDisplay() {
-  const mins = Math.floor(remaining / 60);
-  const secs = remaining % 60;
-  document.getElementById("timerDisplay").textContent =
-    String(mins).padStart(2,"0") + ":" + String(secs).padStart(2,"0");
-}
-
-function setTimer(minutes, button) {
-  if (timerRunning) return;
-  timerDuration = minutes * 60;
-  remaining = timerDuration;
-  updateTimerDisplay();
-
-  document.querySelectorAll(".mode-btn").forEach(b => b.classList.remove("active"));
-  button.classList.add("active");
-
-  document.getElementById("timerSubtitle").textContent = "Ready when you are.";
-}
-
-function toggleTimer() {
-  if (timerRunning) {
-    clearInterval(timerInterval);
-    timerRunning = false;
-    document.getElementById("timerStart").textContent = "Resume focus";
-    document.getElementById("timerSubtitle").textContent = "Timer paused.";
-    return;
-  }
-
-  if (remaining <= 0) resetTimer();
-
-  timerRunning = true;
-  document.getElementById("timerStart").textContent = "Pause";
-  document.getElementById("timerSubtitle").textContent = "One task. Full focus.";
-
-  timerInterval = setInterval(() => {
-    remaining--;
-    updateTimerDisplay();
-
-    if (remaining <= 0) {
-      clearInterval(timerInterval);
-      timerRunning = false;
-      data.studyMinutes += Math.round(timerDuration / 60);
-      saveData();
-      renderStats();
-      document.getElementById("timerStart").textContent = "Start again";
-      document.getElementById("timerSubtitle").textContent = "Session complete. Well done!";
-      alert("Focus session complete! Take a short break.");
-    }
-  }, 1000);
-}
-
-function resetTimer() {
-  clearInterval(timerInterval);
-  timerRunning = false;
-  remaining = timerDuration;
-  updateTimerDisplay();
-  document.getElementById("timerStart").textContent = "Start focus";
-  document.getElementById("timerSubtitle").textContent = "Ready when you are.";
-}
-
-function exportData() {
-  const blob = new Blob([JSON.stringify(data, null, 2)], {
-    type: "application/json"
-  });
-
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = "vyora-jee-backup.json";
-  link.click();
-  URL.revokeObjectURL(url);
-}
-
-function renderAll() {
-  renderStats();
-  renderChapters();
-}
-
-showQuote();
-renderAll();
-updateTimerDisplay();
-</script>
-</body>
-</html>
+function renderStats(){
+ const chapters=allChapters(),total=chapters.length;
+ const done=chapters.filter(c=>c.pct===100).length;
+ const percent=total?Math.round(chapters.reduce((a,c)=>a+c.pct,0)/total):0;
+ const routines=state.routines.filter(t=>t.date===todayKey());
+ const rc=routines.filter(t=>t.d
